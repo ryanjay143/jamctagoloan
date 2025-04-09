@@ -3,7 +3,7 @@ import Sidebar from "./views/user/Layouts/Sidebard";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsRotate, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
 function Admin() {
   const [showScroll, setShowScroll] = useState(false); // Added missing state

@@ -1,7 +1,8 @@
-import { faBars, faBell, faChartLine, faCog, faEnvelope, faHome, faHomeUser, faKeyboard, faTachometerAlt, faTimes, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faTachometerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import logo from "../../../assets/logo.png"
 
 function AdminSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,12 +10,8 @@ function AdminSidebar() {
   const navigate = useNavigate();
 
   const links = [
-    { path: "/athomes/admin/user-dashboard", icon: faTachometerAlt, label: "Dashboard" },
+    { path: "/jamc/tagoloan", icon: faTachometerAlt, label: "Dashboard" },
   ];
-
-  const notificationLink = { path: "/admin/products", icon: faBell, label: "Notification" };
-  const messageLink = { path: "/admin/products", icon: faEnvelope, label: "Message" };
-  const settingsLink = { path: "/admin/products", icon: faCog, label: "Settings" };
 
   const handleNavigation = (path: any) => {
     navigate(path);
@@ -24,13 +21,13 @@ function AdminSidebar() {
   return (
     <>
       <button
-        className={`hidden md:flex fixed top-4 md:fixed left-4 z-50 text-accent bg-[#eff6ff] p-2 rounded-md shadow-md ${
+        className={`hidden md:flex fixed top-4 md:fixed left-4 z-50 text-accent  p-2 rounded-md shadow-md ${
           isOpen ? "hidden" : ""
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className={`${isOpen ? "bg-red-500 p-1.5 rounded" : ""}`}>
-          <FontAwesomeIcon className={`${isOpen ? "text-white" : "text-[#172554]"}`} icon={isOpen ? faTimes : faBars} size="lg" />
+        <div className={`${isOpen ? "p-1.5 rounded" : ""}`}>
+          <FontAwesomeIcon className={`${isOpen ? "text-red-700 font-extrabold" : "text-[#172554]"}`} icon={isOpen ? faTimes : faBars} size="lg" />
         </div>
       </button>
 
@@ -45,12 +42,12 @@ function AdminSidebar() {
         <div className="w-full h-full flex flex-col items-center justify-between py-4">
           {/* Logo Section */}
           <div
-            className="flex justify-center cursor-pointer mb-4"
+            className="flex justify-center cursor-pointer"
             onClick={() => handleNavigation("/admin")}
           >
-            <img src="../../../../logoathomes.jpg" alt="Logo" className="w-42 h-32 rounded-2xl" />
+            <img src={logo} alt="Logo" className="w-42 h-28 rounded-2xl" />
           </div>
-          <hr className="w-48 border-white" />
+          {/* <hr className="w-48 border-white" /> */}
 
           {/* Navigation Menu */}
           <nav className="w-full">
@@ -75,61 +72,10 @@ function AdminSidebar() {
           </nav>
 
           
-          <div className="w-full flex flex-col items-center mb-4">
-            {/* Notification */}
-            <li
-              onClick={() => handleNavigation(notificationLink.path)}
-              className={`w-full text-[#eff6ff] rounded-md flex justify-center items-center transition duration-200 ${
-                location.pathname === notificationLink.path
-                  ? "bg-[#172554] text-[#172554] border border-primary"
-                  : "hover:bg-[#172554] hover:text-[#eff6ff] border border-primary"
-              }`}
-            >
-              <div className="flex items-center gap-3 text-xl w-full px-4 py-2 cursor-pointer">
-                <FontAwesomeIcon icon={notificationLink.icon} className="w-5 h-5" />
-                <span>{notificationLink.label}</span>
-                <span className="bg-red-500 rounded-full w-5 h-5">
-                  <p className="text-center text-sm">0</p>
-                </span>
-              </div>
-            </li>
-
-            {/* Message Link */}
-            <li
-              onClick={() => handleNavigation(messageLink.path)}
-              className={`w-full text-[#eff6ff] rounded-md flex justify-center items-center transition duration-200 ${
-                location.pathname === messageLink.path
-                  ? "bg-[#172554] text-[#172554] border border-primary"
-                  : "hover:bg-[#172554] hover:text-[#eff6ff] border border-primary"
-              }`}
-            >
-              <div className="flex items-center gap-3 text-xl w-full px-4 py-2 cursor-pointer">
-                <FontAwesomeIcon icon={messageLink.icon} className="w-5 h-5" />
-                <span>{messageLink.label}</span>
-                <span className="bg-red-500 rounded-full w-5 h-5">
-                  <p className="text-center text-sm">0</p>
-                </span>
-              </div>
-            </li>
-
-            {/* Settings Link */}
-            <li
-              onClick={() => handleNavigation(settingsLink.path)}
-              className={`w-full text-[#eff6ff] rounded-md flex justify-center items-center transition duration-200 ${
-                location.pathname === settingsLink.path
-                  ? "bg-[#172554] text-[#172554] border border-primary"
-                  : "hover:bg-[#172554] hover:text-[#eff6ff] border border-primary"
-              }`}
-            >
-              <div className="flex items-center gap-3 text-xl w-full px-4 py-2 cursor-pointer">
-                <FontAwesomeIcon icon={settingsLink.icon} className="w-5 h-5" />
-                <span>{settingsLink.label}</span>
-              </div>
-            </li>
-          </div>
+         
 
           <div className="text-center text-sm text-[#eff6ff]">
-            © {new Date().getFullYear()} ATHomes Company
+            © {new Date().getFullYear()} JAMC Tagoloan
           </div>
         </div>
       </div>
