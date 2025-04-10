@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import img from '../../assets/image.jpg'
 
 function TrackAttendance() {
   return (
@@ -24,10 +25,11 @@ function TrackAttendance() {
                 </SelectContent>
             </Select>
             <Input type='text' placeholder='Search' className='w-52' />
-    </div>
+        </div>
         <Table>
             <TableHeader>
                 <TableRow>
+                    <TableHead className="w-[100px] text-center">Photo</TableHead>
                     <TableHead className="w-[100px]">Full Name</TableHead>
                     <TableHead>Role</TableHead>
                     <TableHead className="text-right">Action</TableHead>
@@ -35,6 +37,9 @@ function TrackAttendance() {
             </TableHeader>
             <TableBody>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -44,6 +49,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -53,6 +61,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -62,6 +73,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -71,6 +85,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -80,6 +97,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -89,6 +109,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">
@@ -98,6 +121,9 @@ function TrackAttendance() {
                     </TableCell>
                 </TableRow>
                 <TableRow>
+                    <TableCell className='flex justify-center items-center'>
+                        <img src={img} alt="" className='rounded-full h-10'/>
+                    </TableCell>
                     <TableCell className="font-medium">Ryan Reyes</TableCell>
                     <TableCell>Ministry Head</TableCell>
                     <TableCell className="text-right">

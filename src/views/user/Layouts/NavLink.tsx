@@ -11,8 +11,8 @@ const NavLink = () => {
           <Link
             key={item.to}
             to={item.to}
-            className={`px-3 py-2 rounded-md md:text-[12px] text-[#172554] hover:bg-[#dbeafe] ${
-              location.pathname === item.to ? "bg-[#dbeafe] font-bold" : ""
+            className={`px-3 py-2 rounded-md md:text-[12px] text-[#172554] hover:bg-primary ${
+              location.pathname === item.to ? "bg-primary font-bold text-white" : ""
             }`}
           >
             {item.icon}

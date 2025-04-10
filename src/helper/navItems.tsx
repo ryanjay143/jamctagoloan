@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCheck, faHistory } from "@fortawesome/free-solid-svg-icons";
+import { faHistory, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons/faUserPlus";
 
 export const navItems = [
     {
-      label: "Track Attendance",
-      to: "/jamc/tagoloan/user-dashboard/track-attendance",
-      icon: <FontAwesomeIcon icon={faUserCheck} className="mr-2" />,
+      label: "Check Attendance",
+      to: "/jamc/tagoloan/user-dashboard",
+      icon: <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" />,
     },
     {
       label: "Attendance History",

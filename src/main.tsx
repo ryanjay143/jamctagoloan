@@ -31,7 +31,7 @@ const routes = [
         ),
         children: [
           {
-            path: "track-attendance",
+            path: "",
             element: (
               <Suspense fallback={<Loader />}>
                 <TrackAttendance />
