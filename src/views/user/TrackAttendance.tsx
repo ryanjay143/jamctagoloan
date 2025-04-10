@@ -9,7 +9,7 @@ import img from '../../assets/image.jpg'
 
 function TrackAttendance() {
   return (
-    <div className="pt-3 w-[75%] ml-60 h-screen mx-auto md:ml-0 md:mt-5 md:w-full">
+    <div className="pt-3 w-[80%] ml-60 h-screen mx-auto md:ml-0 md:mt-5 md:w-full">
         <div className='py-2 flex flex-row justify-between'>
             <Select>
                 <SelectTrigger className="w-[120px] border border-primary">
