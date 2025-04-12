@@ -1,4 +1,4 @@
-import { faBars, faTachometerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faEnvelopeCircleCheck, faTachometerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ function AdminSidebar() {
 
   const links = [
     { path: "/jamc/tagoloan", icon: faTachometerAlt, label: "Dashboard" },
+    { path: "/jamc/tagoloan/titthes&offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
   ];
 
   const handleNavigation = (path: any) => {
@@ -21,7 +22,7 @@ function AdminSidebar() {
   return (
     <>
       <button
-        className={`hidden md:flex fixed top-4 md:fixed left-4 z-50 text-accent  p-2 rounded-md shadow-md ${
+        className={`hidden md:flex fixed top-4 md:fixed left-4 z-50 text-accent p-2 rounded-md shadow-md ${
           isOpen ? "hidden" : ""
         }`}
         onClick={() => setIsOpen(!isOpen)}
@@ -33,9 +34,9 @@ function AdminSidebar() {
 
       {/* Sidebar */}
       <div
-        className={`fixed h-full bg-primary text-accent md:z-40 z-40 transition-opacity duration-75 ease-in-out ${
+        className={`fixed h-full bg-primary text-accent md:z-40 z-9999 transition-opacity duration-75 ease-in-out ${
           isOpen ? "w-[240px] opacity-100" : "w-[240px] opacity-100"
-        } md:w-[250px] md:opacity-100 slg:w-[250px] slg:opacity-100 md:flex md:rounded-r-[5px] rounded-r-[5px] overflow-hidden ${
+        } md:w-[250px] md:opacity-100 slg:w-[240px] slg:opacity-100 md:flex md:rounded-r-[5px] rounded-r-[5px] overflow-hidden ${
           !isOpen && "md:hidden"
         } md:transition-all md:ease-in-out`}
       >
@@ -56,7 +57,7 @@ function AdminSidebar() {
                 <li
                 key={link.path}
                 onClick={() => handleNavigation(link.path)}
-                className={`w-full text-[#eff6ff] rounded-md flex justify-center items-center transition duration-200 ${
+                className={`w-[220px] text-[#eff6ff] rounded-md flex justify-center items-center transition duration-200 ${
                   location.pathname.startsWith(link.path)
                     ? "bg-[#172554] text-[#172554] border border-primary"
                     : "hover:bg-[#172554] hover:text-[#eff6ff] border border-primary"

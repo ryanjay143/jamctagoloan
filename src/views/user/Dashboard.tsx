@@ -1,17 +1,58 @@
-
-
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import NavLink from "./Layouts/NavLink";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import img from '../../assets/image.jpg'
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 function Dashboard() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+
   return (
-    <div className='flex flex-col p-5 items-start justify-start h-screen'>
-      <div className='border border-light border-b-4 bg-primary shadow-md rounded-lg p-3 w-[82%] ml-60 mx-auto md:ml-0 md:mt-14 md:w-full'>
-        <h2 className='text-2xl font-bold mb-4 text-white'>Church Attendance Dashboard</h2>
-        <p className='text-white'>Welcome to JAMC Tagoloan</p>
+    <div className="flex flex-col min-h-screen">
+      <div className="flex items-center justify-between p-4 bg-white shadow-md md:mt-16">
+        <div className="text-2xl font-bold ml-64 md:ml-0">Church Attendance Dashboard</div>
+        <nav className="relative flex space-x-4">
+          <div className="relative">
+            <button onClick={toggleDropdown} className="flex shadowm-md rounded-md p-1 border-b-4 items-center focus:outline-none">
+              <Avatar>
+                <AvatarImage src={img} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <FontAwesomeIcon icon={faChevronDown} className="ml-2 text-gray-600" />
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+                <Link to="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  Profile
+                </Link>
+                <Link to="/logout" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                  Logout
+                </Link>
+              </div>
+            )}
+          </div>
+        </nav>
       </div>
-      <NavLink />
-      <Outlet />
+
+      <div className="flex-grow p-4 bg-gray-100">
+        <div className="flex items-center justify-between mb-4">
+          <NavLink />
+        </div>
+        <div>
+          <Outlet />
+        </div>
+      </div>
+
+      <footer className="flex items-center justify-center h-16 bg-gray-200">
+        <p className="text-gray-600">© 2025 JAMC Tagoloan</p>
+      </footer>
     </div>
   );
 }

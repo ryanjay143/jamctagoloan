@@ -6,7 +6,7 @@ const NavLink = () => {
 
   return (
     <div className='flex items-center justify-start ml-60 mx-auto md:ml-0 md:mt-5 md:w-full'>
-      <nav className="flex flex-row md:grid-cols-3 md:grid gap-4 pt-5 md:pt-0 md:overflow-auto">
+      <nav className="flex flex-row md:grid-cols-4 md:text-center md:text-sm md:font-bold md:grid gap-4 pt-5 md:pt-0 md:overflow-auto">
         {navItems.map((item) => (
           <Link
             key={item.to}

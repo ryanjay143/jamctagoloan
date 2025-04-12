@@ -24,7 +24,7 @@ const TableHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn("[&_tr]:border-b sticky top-0 z-10 h-12", className)} // Make header sticky
+    className={cn("[&_tr]:border-b sticky top-0 z-10 h-14", className)} // Make header sticky
     {...props}
   />
 ))
@@ -64,7 +64,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors data-[state=selected]:bg-muted",
+      "border-b transition-colors hover:bg-[#eff6ff] data-[state=selected]:bg-muted", // Add hover:bg-gray-100 for hover effect
       className
     )}
     {...props}
@@ -79,7 +79,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-10 px-2 text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border border-[#bfdbfe] text-accent text-base font-bold bg-primary",
+      "h-7 px-2 text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border border-[#bfdbfe] text-accent text-base font-bold bg-primary",
       className
     )}
     {...props}

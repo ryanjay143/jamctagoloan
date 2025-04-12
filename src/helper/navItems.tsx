@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
+import { faHistory, faCalendarCheck, faList } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons/faUserPlus";
 
 export const navItems = [
@@ -9,7 +9,7 @@ export const navItems = [
       icon: <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" />,
     },
     {
-      label: "Attendance History",
+      label: "Attendance Record",
       to: "/jamc/tagoloan/user-dashboard/history",
       icon: <FontAwesomeIcon icon={faHistory} className="mr-2" />,
     },
@@ -17,6 +17,11 @@ export const navItems = [
       label: "Add Member",
       to: "/jamc/tagoloan/user-dashboard/add-member",
       icon: <FontAwesomeIcon icon={faUserPlus} className="mr-2" />,
+    },
+    {
+      label: "Attendance Report",
+      to: "/jamc/tagoloan/user-dashboard/reports",
+      icon: <FontAwesomeIcon icon={faList} className="mr-2" />,
     },
   ];
 

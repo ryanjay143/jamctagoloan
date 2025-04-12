@@ -5,6 +5,7 @@ import NotFound from './notFound';
 import './index.css';
 import Loader from './components/loader';
 import App from './App';
+import AttendanceReport from './views/user/AttendanceReport';
 
 // Lazy loading components with a delay
 const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Dashboard")));
@@ -51,6 +52,14 @@ const routes = [
             element: (
               <Suspense fallback={<Loader />}>
                 <AddMember />
+              </Suspense>
+            ),
+          },
+          {
+            path: "reports",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <AttendanceReport />
               </Suspense>
             ),
           },

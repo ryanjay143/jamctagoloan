@@ -31,7 +31,7 @@ function Admin() {
       {showScroll && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 p-3 bg-primary text-white rounded-full shadow-lg transition"
+          className="fixed bottom-6 right-4 p-3 bg-primary text-white w-12 h-12 rounded-full shadow-lg transition"
         >
           <FontAwesomeIcon icon={faAngleUp} />
         </button>
