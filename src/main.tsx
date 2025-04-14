@@ -8,13 +8,15 @@ import App from './App';
 import AttendanceReport from './views/user/AttendanceReport';
 
 // Lazy loading components with a delay
-const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Dashboard")));
+const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Attendance")));
 const TrackAttendance = lazy(() => wait(3000).then(() => import("./views/user/TrackAttendance")));
-const AttendanceHistory = lazy(() => wait(3000).then(() => import("./views/user/AttendanceHistory")));
+const AttendanceHistory = lazy(() => wait(3000).then(() => import("./views/user/AttendanceRecord")));
 const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember")));
+const TithesContainer = lazy(() => wait(3000).then(() => import("./views/tithes/TithesContainer")));
 
 // Route configuration
 const routes = [
+
   {
     path: "/jamc/tagoloan",
     element: <App />,
@@ -22,6 +24,14 @@ const routes = [
       {
         path: "",
         element: <Navigate to="/jamc/tagoloan/user-dashboard" />,
+      },
+      {
+        path: "tithes-offering",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TithesContainer />
+          </Suspense>
+        ),
       },
       {
         path: "user-dashboard",
@@ -71,6 +81,20 @@ const routes = [
       },
     ],
   },
+  // {
+  //   path: "/jamc/tagoloan/tithes-offering",
+  //   element: (
+  //     <Suspense fallback={<Loader />}>
+  //       <TithesContainer />
+  //     </Suspense>
+  //   ),
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <Navigate to="/jamc/tagoloan/tithes-offering" />,
+  //     },
+  //   ],
+  // },
 ];
 
 

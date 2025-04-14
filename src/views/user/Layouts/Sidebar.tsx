@@ -1,4 +1,4 @@
-import { faBars, faEnvelopeCircleCheck, faTachometerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faEnvelopeCircleCheck, faListCheck, faTachometerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,8 +10,8 @@ function AdminSidebar() {
   const navigate = useNavigate();
 
   const links = [
-    { path: "/jamc/tagoloan", icon: faTachometerAlt, label: "Dashboard" },
-    { path: "/jamc/tagoloan/titthes&offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
+    { path: "/jamc/tagoloan", icon: faListCheck, label: "Attendance" },
+    { path: "/jamc/tagoloan/tithes-offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
   ];
 
   const handleNavigation = (path: any) => {

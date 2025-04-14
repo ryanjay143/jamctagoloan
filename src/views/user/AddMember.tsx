@@ -12,6 +12,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import Swal from 'sweetalert2';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import EditMemberInfo from './EditMemberInfo';
 
 const AddMember: React.FC = () => {
   const initialFormState = {
@@ -94,9 +95,6 @@ const AddMember: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    
-
-
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -120,6 +118,7 @@ const AddMember: React.FC = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      setIsDialogOpen(false);
       Swal.fire({
         icon: 'success',
         title: 'Success',
@@ -128,7 +127,7 @@ const AddMember: React.FC = () => {
         showConfirmButton: false,
       }).then(() => {
         fetchMembers();
-        setIsDialogOpen(false);
+        
       });
 
       // Reset the form, photo preview, and errors
@@ -172,6 +171,19 @@ const AddMember: React.FC = () => {
     }
   };
 
+  const handleMemberUpdate = (updatedMember: any) => {
+    setMembers((prevMembers) =>
+      prevMembers.map((member) =>
+        member.id === updatedMember.id ? updatedMember : member
+      )
+    );
+    setFilteredMembers((prevFilteredMembers) =>
+      prevFilteredMembers.map((member) =>
+        member.id === updatedMember.id ? updatedMember : member
+      )
+    );
+  };
+
   return (
     <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
       <div className='grid grid-cols-3 gap-4'>
@@ -208,7 +220,7 @@ const AddMember: React.FC = () => {
                               <img
                                 src={`${import.meta.env.VITE_URL}/storage/${member.photo}`}
                                 alt={member.name}
-                                className="rounded-full h-10"
+                                className="rounded-full h-10 w-10"
                               />
                             ) : (
                               <Avatar>
@@ -232,69 +244,7 @@ const AddMember: React.FC = () => {
                           </TableCell>
                           <TableCell className="text-right">
                             <div className="flex justify-end items-center gap-1">
-                              <Dialog>
-                                <DialogTrigger>
-                                <Button className="text-white w-7 h-7 rounded-md">
-                                  <FontAwesomeIcon icon={faPen} />
-                                </Button>
-                                </DialogTrigger>
-                                <DialogContent>
-                                <DialogHeader className='text-start'>
-                                  <DialogTitle>Edit Member Info</DialogTitle>
-                                  <DialogDescription>
-                                    Edit member to the list.
-                                  </DialogDescription>
-                                </DialogHeader>
-
-                                <div className="grid w-full items-center gap-1.5">
-                                  <Label htmlFor="fullname">Full Name</Label>
-                                  <Input
-                                    type="text"
-                                    name="fullname"
-                                    placeholder="Enter fullname"
-                                    value={member.name}
-                                  />
-                                </div>
-
-                                <div className="grid w-full items-center gap-1.5">
-                                  <Label htmlFor="role">Role/Ministry</Label>
-                                  <Select name="role" value={member.role}>
-                                    <SelectTrigger>
-                                      <SelectValue placeholder="Select role or ministry" />
-                                    </SelectTrigger>
-                                    <SelectContent className='max-h-60 overflow-auto'>
-                                      <SelectItem value="First timer">First timer</SelectItem>
-                                      <SelectItem value="Regular">Regular</SelectItem>
-                                      <SelectItem value="Church Pastor">Church Pastor</SelectItem>
-                                      <SelectItem value="Multimedia Service Team">Multimedia Service Team</SelectItem>
-                                      <SelectItem value="Ushering Service Team">Ushering Service Team</SelectItem>
-                                      <SelectItem value="Prayer Service Team">Prayer Service Team</SelectItem>
-                                      <SelectItem value="Finance Team">Finance Team</SelectItem>
-                                      <SelectItem value="Praise & Worship Team">Praise & Worship Team</SelectItem>
-                                      <SelectItem value="Kids Ministry">Kids Ministry</SelectItem>
-                                      <SelectItem value="Cleaning Minstry">Cleaning Ministry</SelectItem>
-                                      <SelectItem value="Family life">Family life</SelectItem>
-                                      <SelectItem value="Arrow life">Arrow life</SelectItem>
-                                      <SelectItem value="Visitor">Visitor</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-
-                                </div>
-
-                                <div className="grid w-full items-center gap-1.5">
-                                  <Label htmlFor="picture">Photo</Label>
-                                  <Input
-                                    id="edit-picture"
-                                    type="file"
-                                    onChange={handleEditFileChange}
-                                    accept="image/*"
-                                  />
-                                  {editPhotoPreview && <img src={editPhotoPreview} alt="Preview" className="w-full h-60 rounded-md" />}
-                                </div>
-                                </DialogContent>
-                              </Dialog>
-
-                            
+                              <EditMemberInfo member={member} onUpdate={handleMemberUpdate} fetchMembers={fetchMembers}/>
                             </div>
                           </TableCell>
                         </TableRow>
@@ -309,27 +259,9 @@ const AddMember: React.FC = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className='flex flex-row justify-between mt-3'>
+              <div className='flex flex-row justify-center mt-5'>
                 <div>
-                  <p className='text-[#172554] text-sm w-full'>Showing 1 to 10 of {filteredMembers.length} entries</p>
-                </div>
-                <div>
-                  <Pagination>
-                    <PaginationContent>
-                      <PaginationItem>
-                        <PaginationPrevious href="#" />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationEllipsis />
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationNext href="#" />
-                      </PaginationItem>
-                    </PaginationContent>
-                  </Pagination>
+                  <p className='text-[#172554] text-base w-full font-bold'>Showing 1 to {filteredMembers.length} entries</p>
                 </div>
               </div>
             </CardContent>

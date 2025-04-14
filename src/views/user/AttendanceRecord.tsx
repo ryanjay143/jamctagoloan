@@ -1,14 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { faChurch, faDatabase, faUserPlus, faUserSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import img from '../../assets/image.jpg'
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { faChild, faChurch, faDatabase, faPeopleGroup, faTrash, faUser, faUserPlus, faUserSlash, faX } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../../plugin/axios';
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useEffect, useState } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
 function AttendanceHistory() {
   const [attendanceCount, setAttendanceCount] = useState<number>(0);
@@ -40,26 +39,16 @@ function AttendanceHistory() {
           'Content-Type': 'application/json',
         },
       });
-  
-      console.log('Count:', response.data.attendanceTodayCount);
-      console.log('Count:', response.data.absentTodayCount);
-      console.log('First timer Count:', response.data.firstTimerCount);
-      console.log('Last Sunday:', response.data.attendedLastSundayCount);
-      console.log('List of Todays Attendanne:', response.data.attendanceToday);
-      console.log('First Timer:', response.data.firstTimer);
-      console.log('Absent today:', response.data.absentToday);
-      console.log('Last Sunday Attended:', response.data.attendedLastSunday);
-  
+
       setAttendanceCount(response.data.attendanceTodayCount);
-      setAbsentAttendanceCount(response.data.absentTodayCount); 
-      setfirstTimerCount(response.data.firstTimerCount); 
+      setAbsentAttendanceCount(response.data.absentTodayCount);
+      setfirstTimerCount(response.data.firstTimerCount);
       setlastSundayCount(response.data.attendedLastSundayCount);
 
       setAttendanceToday(response.data.attendanceToday);
       setfirstTimer(response.data.firstTimer);
       setAbsentAttendance(response.data.absentToday);
       setlastSunday(response.data.attendedLastSunday);
-      
     } catch (error) {
       console.error('Error fetching members:', error);
     }
@@ -74,36 +63,38 @@ function AttendanceHistory() {
     filterFirstTimer();
     filterAttendanceAbsent();
     filterLastSunday();
-  }, [searchQueryForTodaysAtt, attendanceToday, 
-      searchQueryForFirstTimer, firstTimer, 
-      searchQueryForAbsent, attendanceAbsent, searchQueryForLastSunday, lastSunday]);
-  
+  }, [searchQueryForTodaysAtt, attendanceToday, searchQueryForFirstTimer, firstTimer, searchQueryForAbsent, attendanceAbsent, searchQueryForLastSunday, lastSunday]);
+
   const filterAttendanceToday = () => {
     const filtered = attendanceToday.filter((today) =>
-      today.member.name.toLowerCase().includes(searchQueryForTodaysAtt.toLowerCase()) ||
-      today.member.role.toLowerCase().includes(searchQueryForTodaysAtt.toLowerCase())
+      today.member && (
+        today.member.name.toLowerCase().includes(searchQueryForTodaysAtt.toLowerCase()) ||
+        today.member.role.toLowerCase().includes(searchQueryForTodaysAtt.toLowerCase())
+      )
     );
     setFilteredAttendanceToday(filtered);
   };
 
   const filterFirstTimer = () => {
     const filtered = firstTimer.filter((first) =>
-      first.name.toLowerCase().includes(searchQueryForFirstTimer.toLowerCase())
+      first.name && first.name.toLowerCase().includes(searchQueryForFirstTimer.toLowerCase())
     );
     setFilteredFirstTimer(filtered);
   };
 
   const filterAttendanceAbsent = () => {
     const filtered = attendanceAbsent.filter((absent) =>
-      absent.member.name.toLowerCase().includes(searchQueryForAbsent.toLowerCase()) ||
-      absent.member.role.toLowerCase().includes(searchQueryForAbsent.toLowerCase())
+      absent.member && (
+        absent.member.name.toLowerCase().includes(searchQueryForAbsent.toLowerCase()) ||
+        absent.member.role.toLowerCase().includes(searchQueryForAbsent.toLowerCase())
+      )
     );
     setFilteredAttendanceAbsent(filtered);
   };
 
   const filterLastSunday = () => {
     const filtered = lastSunday.filter((sunday) =>
-      sunday.member.name.toLowerCase().includes(searchQueryForLastSunday.toLowerCase())
+      sunday.member && sunday.member.name.toLowerCase().includes(searchQueryForLastSunday.toLowerCase())
     );
     setFilteredLastSunday(filtered);
   };
@@ -113,31 +104,17 @@ function AttendanceHistory() {
       <div className='grid grid-cols-3 gap-4'>
         <div className='col-span-3'>
           <div className='rounded-md min-h-80'>
-            <div className='grid grid-cols-4 md:grid-cols-2 gap-4 p-5'>
-              <div>
-              <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className='text-3xl font-bold text-primary animate-bounce'>
-                      {attendanceCount}
-                    </CardTitle>
-                    <FontAwesomeIcon icon={faChurch} className="ml-2 h-10 text-[#dbeafe]" />
-                  </div>
-                  <CardDescription className='font-bold'>Total Attended Today</CardDescription>
-                </CardHeader>
-              </Card>
-              </div>
-
+            <div className='grid grid-cols-3 md:grid-cols-2 gap-4 p-5'>
               <div>
                 <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className='text-3xl font-bold text-primary animate-bounce'>
-                        {lastSundayCount}
+                      <CardTitle className='text-3xl font-bold text-green-500 animate-bounce'>
+                        {attendanceCount}
                       </CardTitle>
-                      <FontAwesomeIcon icon={faDatabase} className="ml-2 h-10 text-[#dbeafe]" />
+                      <FontAwesomeIcon icon={faChurch} className="ml-2 h-10 text-green-100" />
                     </div>
-                    <CardDescription className='font-bold'>Total Attended Last Sunday</CardDescription>
+                    <CardDescription className='font-bold text-green-500'>Total Attended Today</CardDescription>
                   </CardHeader>
                 </Card>
               </div>
@@ -146,31 +123,74 @@ function AttendanceHistory() {
                 <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className='text-3xl font-bold text-primary animate-bounce'>
-                        {firstTimerCount}
-                      </CardTitle>
-                      <FontAwesomeIcon icon={faUserPlus} className="ml-2 h-10 text-[#dbeafe]" />
-                    </div>
-                    <CardDescription className='font-bold'>First Timer</CardDescription>
-                  </CardHeader>
-                </Card>
-              </div>
-
-              <div>
-                <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className='text-3xl font-bold text-primary animate-bounce'>
+                      <CardTitle className='text-3xl font-bold text-blue-500 animate-bounce'>
                         {attendanceAbsentCount}
                       </CardTitle>
-                      <FontAwesomeIcon icon={faUserSlash} className="ml-2 h-10 text-[#dbeafe]" />
+                      <FontAwesomeIcon icon={faChild} className="ml-2 h-10 text-blue-100" />
                     </div>
-                    <CardDescription className='font-bold'>Total Today's Absent</CardDescription>
+                    <CardDescription className='font-bold text-blue-500'>Kids Attended Today</CardDescription>
                   </CardHeader>
                 </Card>
               </div>
-            </div>
 
+              <div>
+                <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className='text-3xl font-bold text-orange-500 animate-bounce'>
+                        {attendanceAbsentCount}
+                      </CardTitle>
+                      <FontAwesomeIcon icon={faPeopleGroup} className="ml-2 h-10 text-orange-100" />
+                    </div>
+                    <CardDescription className='font-bold text-orange-500'>Adults Attended Today</CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              <div>
+                <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className='text-3xl font-bold text-pink-500 animate-bounce'>
+                        {lastSundayCount}
+                      </CardTitle>
+                      <FontAwesomeIcon icon={faDatabase} className="ml-2 h-10 text-pink-100" />
+                    </div>
+                    <CardDescription className='font-bold text-pink-500'>Total Attended Last Sunday</CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              <div>
+                <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className='text-3xl font-bold text-yellow-500 animate-bounce'>
+                        {firstTimerCount}
+                      </CardTitle>
+                      <FontAwesomeIcon icon={faUserPlus} className="ml-2 h-10 text-yellow-100" />
+                    </div>
+                    <CardDescription className='font-bold text-yellow-500'>First Timer</CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              <div>
+                <Card className='max-h-32 border border-b-4 border-primary shadow-md'>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className='text-3xl font-bold text-red-500 animate-bounce'>
+                        {attendanceAbsentCount}
+                      </CardTitle>
+                      <FontAwesomeIcon icon={faUserSlash} className="ml-2 h-10 text-red-100" />
+                    </div>
+                    <CardDescription className='font-bold text-red-500'>Total Today's Absent</CardDescription>
+                  </CardHeader>
+                </Card>
+              </div>
+
+              
+            </div>
 
             <CardContent>
               <div className='grid grid-cols-2 md:grid-cols-1 gap-4'>
@@ -193,6 +213,7 @@ function AttendanceHistory() {
                           <TableHead>Full Name</TableHead>
                           <TableHead>Role</TableHead>
                           <TableHead>Status</TableHead>
+                          <TableHead>Action</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -200,7 +221,7 @@ function AttendanceHistory() {
                           filteredAttendanceToday.map((today) => (
                             <TableRow key={today.id}>
                               <TableCell className="flex justify-center items-center">
-                                {today.member.photo ? (
+                                {today.member?.photo ? (
                                   <img
                                     src={`${import.meta.env.VITE_URL}/storage/${today?.member.photo}`}
                                     alt={today.member.name}
@@ -213,8 +234,8 @@ function AttendanceHistory() {
                                   </Avatar>
                                 )}
                               </TableCell>
-                              <TableCell>{today.member.name}</TableCell>
-                              <TableCell>{today.member.role}</TableCell>
+                              <TableCell>{today.member?.name}</TableCell>
+                              <TableCell>{today.member?.role}</TableCell>
                               <TableCell>
                                 {today.status === 0 ? (
                                   <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
@@ -223,6 +244,11 @@ function AttendanceHistory() {
                                 ) : (
                                   <span>{today.status}</span>
                                 )}
+                              </TableCell>
+                              <TableCell>
+                                <Button className='bg-red-500 hover:bg-red-300 ml-4 md:ml-2 h-7 w-5'>
+                                    <FontAwesomeIcon icon={faX} />
+                                </Button>
                               </TableCell>
                             </TableRow>
                           ))
@@ -322,7 +348,7 @@ function AttendanceHistory() {
                           filteredAttendanceAbsent.map((absent) => (
                             <TableRow key={absent.id}>
                               <TableCell className="flex justify-center items-center">
-                                {absent.member.photo ? (
+                                {absent.member?.photo ? (
                                   <img
                                     src={`${import.meta.env.VITE_URL}/storage/${absent?.member.photo}`}
                                     alt={absent.member.name}
@@ -335,8 +361,8 @@ function AttendanceHistory() {
                                   </Avatar>
                                 )}
                               </TableCell>
-                              <TableCell>{absent.member.name}</TableCell>
-                              <TableCell>{absent.member.role}</TableCell>
+                              <TableCell>{absent.member?.name}</TableCell>
+                              <TableCell>{absent.member?.role}</TableCell>
                               <TableCell>
                                 {absent.status === 1 ? (
                                   <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset">
@@ -386,7 +412,7 @@ function AttendanceHistory() {
                           filteredLastSunday.map((sunday) => (
                             <TableRow key={sunday.id}>
                               <TableCell className="flex justify-center items-center">
-                                {sunday.member.photo ? (
+                                {sunday.member?.photo ? (
                                   <img
                                     src={`${import.meta.env.VITE_URL}/storage/${sunday?.member.photo}`}
                                     alt={sunday.member.name}
@@ -399,8 +425,8 @@ function AttendanceHistory() {
                                   </Avatar>
                                 )}
                               </TableCell>
-                              <TableCell>{sunday.member.name}</TableCell>
-                              <TableCell>{sunday.member.role}</TableCell>
+                              <TableCell>{sunday.member?.name}</TableCell>
+                              <TableCell>{sunday.member?.role}</TableCell>
                               <TableCell>
                                 {sunday.status === 1 ? (
                                   <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset">
@@ -427,15 +453,13 @@ function AttendanceHistory() {
                     </Table>
                   </div>
                 </div>
-             </div>
-
-            
+              </div>
             </CardContent>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default AttendanceHistory;

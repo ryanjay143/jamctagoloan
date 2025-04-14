@@ -173,7 +173,7 @@ function AttendanceReport() {
                               <img
                                 src={`${import.meta.env.VITE_URL}/storage/${sunday?.member.photo}`}
                                 alt={sunday.member.name}
-                                className="rounded-full h-10"
+                                className="rounded-full h-10 w-10"
                               />
                             ) : (
                               <Avatar>
