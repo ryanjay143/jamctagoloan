@@ -1,20 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd, faCheckCircle, faPlus, faSpinner, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faSpinner, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from '../../plugin/axios';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
 import Swal from 'sweetalert2';
+import DialogAddMember from './layouts/dialog/DialogAddMember';
 
 function TrackAttendance() {
   const initialFormState = {
@@ -25,7 +21,6 @@ function TrackAttendance() {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [members, setMembers] = useState<any[]>([]);
-  const [removingMemberId, setRemovingMemberId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredMembers, setFilteredMembers] = useState<any[]>([]);
   const [loadingPresent, setLoadingPresent] = useState<Set<number>>(new Set());
@@ -98,7 +93,7 @@ function TrackAttendance() {
     setLoading(true);
 
     try {
-      const response = await axios.post('list-of-member', data, {
+      await axios.post('list-of-member', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -151,21 +146,19 @@ function TrackAttendance() {
         setLoadingAbsent((prev) => new Set(prev).add(memberId));
       }
 
-      const response = await axios.put(`list-of-member/${memberId}`, {
+      await axios.put(`list-of-member/${memberId}`, {
         attendance_status: 1,
         status: desiredStatus,
       });
 
-      if (response.status === 200) {
-        if (action === 'present') {
-          toast.success(`${memberName} marked as present.`);
-        } else {
-          toast.error(`${memberName} marked as absent.`);
-        }
-
-        setMembers((prevMembers) => prevMembers.filter(member => member.id !== memberId));
-        setFilteredMembers((prevFilteredMembers) => prevFilteredMembers.filter(member => member.id !== memberId));
+      if (action === 'present') {
+        toast.success(`${memberName} marked as present.`);
+      } else {
+        toast.error(`${memberName} marked as absent.`);
       }
+
+      setMembers((prevMembers) => prevMembers.filter(member => member.id !== memberId));
+      setFilteredMembers((prevFilteredMembers) => prevFilteredMembers.filter(member => member.id !== memberId));
     } catch (error: any) {
       if (error.response && error.response.status === 409) {
         const errorMessage = error.response.data.message;
@@ -220,8 +213,7 @@ function TrackAttendance() {
             </CardHeader>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
-                <CardTitle className='text-3xl'>List of Attendance</CardTitle>
-                <label htmlFor="" className='text-3xl'></label>
+                <CardTitle className='text-3xl md:text-base'>List of Attendance</CardTitle>
                 <Input
                   type='text'
                   placeholder='Search'
@@ -234,16 +226,16 @@ function TrackAttendance() {
                 <Table className='w-full'>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className='text-center'>Photo</TableHead>
-                      <TableHead>Full Name</TableHead>
-                      <TableHead>Role/Ministry</TableHead>
-                      <TableHead className="text-right">Action</TableHead>
+                      <TableHead className='text-center md:text-xs'>Photo</TableHead>
+                      <TableHead className='md:text-xs'>Full Name</TableHead>
+                      <TableHead className='md:text-xs'>Role/Ministry</TableHead>
+                      <TableHead className="text-right md:text-xs">Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredMembers.length > 0 ? (
                       filteredMembers.map((member) => (
-                        <TableRow key={member.id} className={removingMemberId === member.id ? 'fade-out' : ''}>
+                        <TableRow key={member.id}>
                           <TableCell className="flex justify-center md:justify-center item-center md:h-24 ">
                             {member.photo ? (
                               <img
@@ -258,8 +250,8 @@ function TrackAttendance() {
                               </Avatar>
                             )}
                           </TableCell>
-                          <TableCell>{member.name}</TableCell>
-                          <TableCell>{member.role}</TableCell>
+                          <TableCell className='md:text-xs'>{member.name}</TableCell>
+                          <TableCell className='md:text-xs'>{member.role}</TableCell>
                           <TableCell className="text-right">
                             <div className="flex justify-end md:flex-col md:gap-3 items-center gap-1">
                               <Button
@@ -303,7 +295,7 @@ function TrackAttendance() {
                   </TableBody>
                 </Table>
               </div>
-              <div className='flex flex-row justify-center mt-5'>
+              <div className='flex flex-row justify-end mt-5'>
                 <div>
                   <p className='text-[#172554] text-base w-full font-bold'>Showing 1 to {filteredMembers.length} entries</p>
                 </div>
@@ -312,93 +304,19 @@ function TrackAttendance() {
           </div>
         </div>
       </div>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <Button className="fixed bottom-20 right-4 w-12 h-12 rounded-full bg-primary text-white shadow-lg flex items-center justify-center">
-            <FontAwesomeIcon icon={faPlus} />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className='overflow-auto max-h-[80vh] md:max-h-[90vh]'>
-          <div>
-            <DialogHeader className='text-start'>
-              <DialogTitle>Add Member</DialogTitle>
-              <DialogDescription>
-                Add a new member to the list.
-              </DialogDescription>
-            </DialogHeader>
-
-            <form className='grid gap-4 mt-5' onSubmit={handleSubmit}>
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="fullname">Full Name</Label>
-                <Input
-                  type="text"
-                  name="fullname"
-                  placeholder="Enter fullname"
-                  value={formData.fullname}
-                  onChange={handleInputChange}
-                />
-                {errors.fullname && <span className="text-red-500">{errors.fullname}</span>}
-              </div>
-
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="role">Role/Ministry</Label>
-                <Select
-                  name="role"
-                  value={formData.role}
-                  onValueChange={(value) => setFormData({ ...formData, role: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select role or ministry" />
-                  </SelectTrigger>
-                  <SelectContent className='max-h-60 overflow-auto'>
-                    <SelectItem value="First timer">First timer</SelectItem>
-                    <SelectItem value="Regular">Regular</SelectItem>
-                    <SelectItem value="Church Pastor">Church Pastor</SelectItem>
-                    <SelectItem value="Multimedia Service Team">Multimedia Service Team</SelectItem>
-                    <SelectItem value="Ushering Service Team">Ushering Service Team</SelectItem>
-                    <SelectItem value="Prayer Service Team">Prayer Service Team</SelectItem>
-                    <SelectItem value="Finance Team">Finance Team</SelectItem>
-                    <SelectItem value="Praise & Worship Team">Praise & Worship Team</SelectItem>
-                    <SelectItem value="Kids Ministry">Kids Ministry</SelectItem>
-                    <SelectItem value="Cleaning Minstry">Cleaning Minstry</SelectItem>
-                    <SelectItem value="Family life">Family life</SelectItem>
-                    <SelectItem value="Arrow life">Arrow life</SelectItem>
-                    <SelectItem value="Visitor">Visitor</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.role && <span className="text-red-500">{errors.role}</span>}
-              </div>
-
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="picture">Photo</Label>
-                <Input
-                  id="add-picture"
-                  type="file"
-                  onChange={handleAddFileChange}
-                  accept="image/*"
-                />
-                {photoPreview && <img src={photoPreview} alt="Preview" className="w-full h-60 rounded-md" />}
-              </div>
-
-              <div className="grid w-full items-center gap-1.5">
-                <Button type="submit" disabled={loading}>
-                  {loading ? (
-                    <>
-                      <span>Adding Member...</span>
-                      <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4" />
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faAdd} />
-                      <span>Add Member</span>
-                    </>
-                  )}
-                </Button>
-              </div>
-            </form>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <DialogAddMember
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        formData={formData}
+        setFormData={setFormData}
+        errors={errors}
+        setErrors={setErrors}
+        handleInputChange={handleInputChange}
+        handleAddFileChange={handleAddFileChange}
+        handleSubmit={handleSubmit}
+        photoPreview={photoPreview}
+        loading={loading}
+      />
     </div>
   );
 }

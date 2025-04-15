@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAdd, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
 import axios from '../../plugin/axios';
 import { CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import Swal from 'sweetalert2';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import EditMemberInfo from './EditMemberInfo';
+import DialogAddMember from './layouts/dialog/DialogAddMember';
 
 const AddMember: React.FC = () => {
   const initialFormState = {
@@ -26,7 +20,6 @@ const AddMember: React.FC = () => {
   const [members, setMembers] = useState<any[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<any[]>([]);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [editPhotoPreview, setEditPhotoPreview] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
@@ -70,23 +63,6 @@ const AddMember: React.FC = () => {
     }
   };
 
-  const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
-      if (!validTypes.includes(file.type)) {
-        setEditPhotoPreview(null);
-      } else {
-        // Create a FileReader to read the file and set the preview
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setEditPhotoPreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  };
-
   const validateForm = () => {
     const newErrors: { fullname?: string; role?: string } = {};
     if (!formData.fullname) newErrors.fullname = 'Full name is required';
@@ -101,19 +77,19 @@ const AddMember: React.FC = () => {
       setErrors(validationErrors);
       return;
     }
-
+  
     const data = new FormData();
     data.append('name', formData.fullname);
     data.append('role', formData.role);
     if (formData.photo) {
       data.append('photo', formData.photo);
     }
-
+  
     if (loading) return;
     setLoading(true);
-
+  
     try {
-      const response = await axios.post('list-of-member', data, {
+      await axios.post('list-of-member', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -127,9 +103,8 @@ const AddMember: React.FC = () => {
         showConfirmButton: false,
       }).then(() => {
         fetchMembers();
-        
       });
-
+  
       // Reset the form, photo preview, and errors
       setFormData(initialFormState);
       setPhotoPreview(null);
@@ -146,8 +121,8 @@ const AddMember: React.FC = () => {
         text: 'There was an error adding the member. Please try again.',
       });
     } finally {
-        setLoading(false);
-      } 
+      setLoading(false);
+    }
   };
 
   const fetchMembers = async () => {
@@ -191,7 +166,7 @@ const AddMember: React.FC = () => {
           <div className='rounded-md min-h-80'>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
-              <label htmlFor="" className='text-3xl'>List of members</label>
+                <label htmlFor="" className='text-3xl md:text-base'>List of members</label>
                 <Input
                   type='text'
                   placeholder='Search'
@@ -204,11 +179,11 @@ const AddMember: React.FC = () => {
                 <Table className='w-full'>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className='text-center'>Photo</TableHead>
-                      <TableHead>Full Name</TableHead>
-                      <TableHead>Role/Ministry</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="text-right">Action</TableHead>
+                      <TableHead className='text-center md:text-xs'>Photo</TableHead>
+                      <TableHead className='md:text-xs'>Full Name</TableHead>
+                      <TableHead className='md:text-xs'>Role/Ministry</TableHead>
+                      <TableHead className='md:text-xs'>Status</TableHead>
+                      <TableHead className="text-right md:text-xs">Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -229,8 +204,8 @@ const AddMember: React.FC = () => {
                               </Avatar>
                             )}
                           </TableCell>
-                          <TableCell>{member.name}</TableCell>
-                          <TableCell>{member.role}</TableCell>
+                          <TableCell className='md:text-xs'>{member.name}</TableCell>
+                          <TableCell className='md:text-xs'>{member.role}</TableCell>
                           <TableCell>
                             {member.church_status === '0' ? (
                               <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
@@ -268,94 +243,19 @@ const AddMember: React.FC = () => {
           </div>
         </div>
       </div>
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <Button className="fixed bottom-20 right-4 w-12 h-12 rounded-full bg-primary text-white shadow-lg flex items-center justify-center">
-            <FontAwesomeIcon icon={faPlus} />
-          </Button>
-        </DialogTrigger>
-        <DialogContent className='overflow-auto max-h-[80vh] md:max-h-[90vh]'>
-          <div >
-            <DialogHeader className='text-start'>
-              <DialogTitle>Add Member</DialogTitle>
-              <DialogDescription>
-                Add a new member to the list.
-              </DialogDescription>
-            </DialogHeader>
-
-            <form className='grid gap-4 mt-5' onSubmit={handleSubmit}>
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="fullname">Full Name</Label>
-                <Input
-                  type="text"
-                  name="fullname"
-                  placeholder="Enter fullname"
-                  value={formData.fullname}
-                  onChange={handleInputChange}
-                />
-                {errors.fullname && <span className="text-red-500">{errors.fullname}</span>}
-              </div>
-
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="role">Role/Ministry</Label>
-                <Select
-                  name="role"
-                  value={formData.role}
-                  onValueChange={(value) => setFormData({ ...formData, role: value })}
-                >
-                  <SelectTrigger >
-                    <SelectValue placeholder="Select role or ministry" />
-                  </SelectTrigger>
-                  <SelectContent className='max-h-60 overflow-auto'>
-                    <SelectItem value="First timer">First timer</SelectItem>
-                    <SelectItem value="Regular">Regular</SelectItem>
-                    <SelectItem value="Church Pastor">Church Pastor</SelectItem>
-                    <SelectItem value="Multimedia Service Team">Multimedia Service Team</SelectItem>
-                    <SelectItem value="Ushering Service Team">Ushering Service Team</SelectItem>
-                    <SelectItem value="Prayer Service Team">Prayer Service Team</SelectItem>
-                    <SelectItem value="Finance Team">Finance Team</SelectItem>
-                    <SelectItem value="Praise & Worship Team">Praise & Worship Team</SelectItem>
-                    <SelectItem value="Kids Ministry">Kids Ministry</SelectItem>
-                    <SelectItem value="Cleaning Minstry">Cleaning Minstry</SelectItem>
-                    <SelectItem value="Family life">Family life</SelectItem>
-                    <SelectItem value="Arrow life">Arrow life</SelectItem>
-                    <SelectItem value="Visitor">Visitor</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.role && <span className="text-red-500">{errors.role}</span>}
-              </div>
-
-              <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="picture">Photo</Label>
-                <Input
-                  id="add-picture"
-                  type="file"
-                  onChange={handleAddFileChange}
-                  accept="image/*"
-                />
-                {photoPreview && <img src={photoPreview} alt="Preview" className="w-full h-60 rounded-md" />}
-              </div>
-
-              <div className="grid w-full items-center gap-1.5">
-                <Button type="submit" disabled={loading}>
-                {loading ? (
-                  <>
-                    <span>Adding Mmeber...</span>
-                    <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4" />
-                  </>
-                ) : (
-                  <>
-                   <FontAwesomeIcon icon={faAdd} /> 
-                    <span>Add Member</span>
-                  </>
-                )}
-                  
-                </Button>
-              </div>
-            </form>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <DialogAddMember
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        formData={formData}
+        setFormData={setFormData}
+        errors={errors}
+        setErrors={setErrors}
+        handleInputChange={handleInputChange}
+        handleAddFileChange={handleAddFileChange}
+        handleSubmit={handleSubmit}
+        photoPreview={photoPreview}
+        loading={loading}
+      />
     </div>
   );
 };

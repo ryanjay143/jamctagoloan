@@ -1,4 +1,4 @@
-import { faBars, faEnvelopeCircleCheck, faListCheck, faTachometerAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faEnvelopeCircleCheck, faListCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ function AdminSidebar() {
   return (
     <>
       <button
-        className={`hidden md:flex fixed top-4 md:fixed left-4 z-50 text-accent p-2 rounded-md shadow-md ${
+        className={`hidden md:flex fixed top-4 md:fixed left-4 z-50 bg-white text-accent p-2 rounded-md shadow-md ${
           isOpen ? "hidden" : ""
         }`}
         onClick={() => setIsOpen(!isOpen)}
@@ -35,8 +35,8 @@ function AdminSidebar() {
       {/* Sidebar */}
       <div
         className={`fixed h-full bg-primary text-accent md:z-40 z-9999 transition-opacity duration-75 ease-in-out ${
-          isOpen ? "w-[240px] opacity-100" : "w-[240px] opacity-100"
-        } md:w-[250px] md:opacity-100 slg:w-[240px] slg:opacity-100 md:flex md:rounded-r-[5px] rounded-r-[5px] overflow-hidden ${
+          isOpen ? "w-[240px] opacity-100" : "w-[230px] opacity-100"
+        } md:w-[240px] md:opacity-100 slg:w-[230px] slg:opacity-100 md:flex md:rounded-r-[5px] rounded-r-[5px] overflow-hidden ${
           !isOpen && "md:hidden"
         } md:transition-all md:ease-in-out`}
       >
@@ -44,7 +44,7 @@ function AdminSidebar() {
           {/* Logo Section */}
           <div
             className="flex justify-center cursor-pointer"
-            onClick={() => handleNavigation("/admin")}
+            onClick={() => handleNavigation("/jamc/tagoloan/user-dashboard")}
           >
             <img src={logo} alt="Logo" className="w-42 h-28 rounded-2xl" />
           </div>

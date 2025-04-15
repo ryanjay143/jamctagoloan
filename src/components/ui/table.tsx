@@ -10,7 +10,7 @@ const Table = React.forwardRef<
     <div className="overflow-auto max-h-[450px]"> {/* Add scrollable container */}
       <table
         ref={ref}
-        className={cn("w-full caption-bottom text-sm", className)}
+        className={cn("w-full caption-bottom text-sm ", className)}
         {...props}
       />
     </div>
@@ -18,13 +18,29 @@ const Table = React.forwardRef<
 ))
 Table.displayName = "Table"
 
+const TableReport = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full">
+    <div className="overflow-auto"> {/* Add scrollable container */}
+      <table
+        ref={ref}
+        className={cn("w-full caption-bottom text-sm", className)}
+        {...props}
+      />
+    </div>
+  </div>
+))
+Table.displayName = "TableReport"
+
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn("[&_tr]:border-b sticky top-0 z-10 h-14", className)} // Make header sticky
+    className={cn("[&_tr]:border-b sticky top-0 z-10 h-14 ", className)} // Make header sticky
     {...props}
   />
 ))
@@ -79,7 +95,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-7 px-2 text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border border-[#bfdbfe] text-accent text-base font-bold bg-primary",
+      "h-7 md:h-12 px-2 text-left align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] border border-[#bfdbfe] text-accent text-base font-bold bg-primary",
       className
     )}
     {...props}
@@ -116,6 +132,7 @@ TableCaption.displayName = "TableCaption"
 
 export {
   Table,
+  TableReport,
   TableHeader,
   TableBody,
   TableFooter,

@@ -11,9 +11,7 @@ import Swal from 'sweetalert2';
 
 const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => void; fetchMembers: () => void }> = ({ member, onUpdate, fetchMembers }) => {
   const [editData, setEditData] = useState(member);
-  const [showAttendanceStatus, setShowAttendanceStatus] = useState(false);
   const [loading, setLoading] = useState(false);
-  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editPhotoPreview, setEditPhotoPreview] = useState<string | null>(member.photo ? `${import.meta.env.VITE_URL}/storage/${member.photo}` : null);
 
@@ -43,7 +41,6 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
     if (loading) return;
     setLoading(true);
 
-
     const data = new FormData();
     data.append('name', editData.name);
     data.append('role', editData.role);
@@ -69,7 +66,6 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
         showConfirmButton: false,
       }).then(() => {
         fetchMembers();
-        
       });
     } catch (error) {
       console.error('Error updating member:', error);
@@ -78,21 +74,20 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
         title: 'Error',
         text: 'There was an error updating the member. Please try again.',
       });
-    }
-    finally {
-        setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div >
+    <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
+        <DialogTrigger asChild>
           <Button className="text-white w-7 h-7 rounded-md">
             <FontAwesomeIcon icon={faPen} />
           </Button>
         </DialogTrigger>
-        <DialogContent className='overflow-auto max-h-[80vh] md:max-h-[90vh]' >
+        <DialogContent className='overflow-auto md:max-h-[90vh] md:max-w-[400px]'>
           <DialogHeader className='text-start'>
             <DialogTitle>Edit Member Info</DialogTitle>
             <DialogDescription>
@@ -148,25 +143,6 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
             </Select>
           </div>
 
-          {showAttendanceStatus && (
-            <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="attendanceStatus">Attendance Status</Label>
-                <Select
-                name="attendance_status"
-                value={editData.attendance_status}
-                onValueChange={(value) => setEditData({ ...editData, attendance_status: value })}
-                >
-                <SelectTrigger>
-                    <SelectValue placeholder="Select Attendance Status" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="0">Absent</SelectItem>
-                    <SelectItem value="1">Present</SelectItem>
-                </SelectContent>
-                </Select>
-            </div>
-            )}
-
           <div className="grid items-center gap-1.5">
             <Label htmlFor="picture">Photo</Label>
             <Input
@@ -179,18 +155,17 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
           </div>
 
           <Button onClick={handleSave} disabled={loading}>
-          {loading ? (
-                <>
-                  <span>Saving...</span>
-                  <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4" />
-                </>
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faArrowRight} />
-                  Save Changes 
-                </>
-              )}
-           
+            {loading ? (
+              <>
+                <span>Saving...</span>
+                <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4" />
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faArrowRight} />
+                Save Changes
+              </>
+            )}
           </Button>
         </DialogContent>
       </Dialog>
