@@ -1,9 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import NavLink from '../user/layouts/NavLink'
 import Footer from '../user/layouts/Footer'
 import img from '../../assets/image.jpg'
 import NavLinkForTithes from '../user/layouts/NavLinkForTithes'
@@ -18,7 +17,7 @@ function TithesContainer() {
 
   return (
     <div className="flex flex-col min-h-screen">
-    <div className="flex items-center justify-between p-4 bg-white shadow-md md:mt-16">
+    <div className="flex items-center justify-between py-4 bg-white shadow-md md:mt-16">
       <div className="text-2xl font-bold ml-64 md:ml-0">Tithes & Offering</div>
       <nav className="relative flex space-x-4">
         <div className="relative">
@@ -43,7 +42,7 @@ function TithesContainer() {
       </nav>
     </div>
 
-    <div className="flex-grow p-4 bg-gray-100">
+    <div className="flex-grow bg-gray-100">
       <div className="flex items-center justify-between mb-4">
         <NavLinkForTithes />
       </div>

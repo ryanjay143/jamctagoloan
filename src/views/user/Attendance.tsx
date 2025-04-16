@@ -17,7 +17,7 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex items-center justify-between p-4 bg-white shadow-md md:mt-16">
+      <div className="flex items-center justify-between py-4 bg-white shadow-md md:mt-16">
         <div className="text-2xl font-bold ml-64 md:ml-0 md:text-base">JAMC Tagoloan Church Attendance</div>
         <nav className="relative flex space-x-4">
           <div className="relative">

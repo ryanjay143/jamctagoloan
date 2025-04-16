@@ -9,10 +9,13 @@ import AttendanceReport from './views/user/AttendanceReport';
 
 // Lazy loading components with a delay
 const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Attendance")));
-const TrackAttendance = lazy(() => wait(3000).then(() => import("./views/user/TrackAttendance")));
+const TrackAttendance = lazy(() => wait(3000).then(() => import("./views/user/CheckAttendance")));
 const AttendanceHistory = lazy(() => wait(3000).then(() => import("./views/user/AttendanceRecord")));
 const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember")));
 const TithesContainer = lazy(() => wait(3000).then(() => import("./views/tithes/TithesContainer")));
+const TithesGiving = lazy(() => wait(3000).then(() => import("./views/tithes/TithesGiving")));
+const TithesHistory = lazy(() => wait(3000).then(() => import("./views/tithes/TithesHistory")));
+const TithesReport = lazy(() => wait(3000).then(() => import("./views/tithes/TithesReport")));
 
 // Route configuration
 const routes = [
@@ -23,7 +26,7 @@ const routes = [
     children: [
       {
         path: "",
-        element: <Navigate to="/jamc/tagoloan/user-dashboard" />,
+        element: <Navigate to="/jamc/tagoloan/attendance" />,
       },
       {
         path: "tithes-offering",
@@ -32,9 +35,43 @@ const routes = [
             <TithesContainer />
           </Suspense>
         ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesGiving />
+              </Suspense>
+            ),
+          },
+          {
+            path: "history",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesHistory />
+              </Suspense>
+            ),
+          },
+          {
+            path: "report",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesReport />
+              </Suspense>
+            ),
+          },
+          {
+            path: "per-member-summary",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesReport />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
-        path: "user-dashboard",
+        path: "attendance",
         element: (
           <Suspense fallback={<Loader />}>
             <Dashboard />

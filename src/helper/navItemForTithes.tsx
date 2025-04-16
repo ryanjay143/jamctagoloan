@@ -3,8 +3,8 @@ import { faHistory, faGift, faList12, faUser } from "@fortawesome/free-solid-svg
 
 export const navItemForTithes = [
     {
-      label: "Tithes Record",
-      to: "/jamc/tagoloan/tithes-offering/giving",
+      label: "Tithes Record Giving",
+      to: "/jamc/tagoloan/tithes-offering",
       icon: <FontAwesomeIcon icon={faGift} className="mr-2" />,
     },
     {
@@ -19,7 +19,7 @@ export const navItemForTithes = [
     },
     {
       label: "Per Member Summary",
-      to: "/jamc/tagoloan/user-dashboard/per-member-summary",
+      to: "/jamc/tagoloan/tithes-offering/per-member-summary",
       icon: <FontAwesomeIcon icon={faUser} className="mr-2" />,
     },
   ];

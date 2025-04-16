@@ -209,8 +209,6 @@ function TrackAttendance() {
       <div className='grid grid-cols-3 gap-4'>
         <div className='col-span-3'>
           <div className='rounded-md min-h-80'>
-            <CardHeader>
-            </CardHeader>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
                 <CardTitle className='text-3xl md:text-base'>List of Attendance</CardTitle>

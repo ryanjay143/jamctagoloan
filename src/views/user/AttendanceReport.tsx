@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { TableBody, TableCell, TableHead, TableHeader, TableReport, TableRow } from '@/components/ui/table';
 import axios from '../../plugin/axios';
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -244,7 +244,7 @@ function AttendanceReport() {
 
               </div>
               <div className='overflow-x-auto'>
-                <Table className='w-full'>
+                <TableReport className='w-full'>
                   <TableHeader>
                     <TableRow>
                       <TableHead className='text-center md:text-xs'>#</TableHead>
@@ -259,7 +259,7 @@ function AttendanceReport() {
                     {filteredAttendance.length > 0 ? (
                       filteredAttendance.map((sunday, index) => (
                         <TableRow key={sunday.id}>
-                          <TableCell>{index + 1}</TableCell>
+                          <TableCell className='text-center'>{index + 1}</TableCell>
                           <TableCell className="flex justify-center items-center">
                             {sunday.member.photo ? (
                               <img
@@ -300,7 +300,7 @@ function AttendanceReport() {
                       </TableRow>
                     )}
                   </TableBody>
-                </Table>
+                </TableReport>
               </div>
               <div className='flex flex-row justify-end mt-5'>
                 <div>
