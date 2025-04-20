@@ -146,11 +146,11 @@ function AttendanceHistory() {
 
   return (
     
-    <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
+    <div className='ml-56 mx-auto md:ml-0 md:w-full'>
       <ToastContainer />
       <div className='grid grid-cols-3 gap-4'>
         <div className='col-span-3'>
-          <div className='rounded-md min-h-80'>
+          <div className='rounded-md min-h-80 p-2 pl-2 md:pl-0'>
             <div className='grid grid-cols-3 md:grid-cols-2 gap-4 p-5'>
               <div>
                 <Card className='max-h-32 border border-b-4 border-primary shadow-md'>

@@ -7,18 +7,18 @@ export const navItemForTithes = [
       to: "/jamc/tagoloan/tithes-offering",
       icon: <FontAwesomeIcon icon={faGift} className="mr-2" />,
     },
+    // {
+    //   label: "Expense",
+    //   to: "/jamc/tagoloan/expense",
+    //   icon: <FontAwesomeIcon icon={faMoneyCheck} className="mr-2" />,
+    // },
     {
       label: "Expense",
-      to: "/jamc/tagoloan/expense",
+      to: "/jamc/tagoloan/tithes-offering/expense",
       icon: <FontAwesomeIcon icon={faMoneyCheck} className="mr-2" />,
     },
     {
-      label: "History",
-      to: "/jamc/tagoloan/tithes-offering/history",
-      icon: <FontAwesomeIcon icon={faHistory} className="mr-2" />,
-    },
-    {
-      label: "Tithes Report",
+      label: "Reports",
       to: "/jamc/tagoloan/tithes-offering/report",
       icon: <FontAwesomeIcon icon={faList12} className="mr-2" />,
     },

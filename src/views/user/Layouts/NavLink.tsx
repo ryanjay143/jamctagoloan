@@ -11,7 +11,7 @@ const NavLink = () => {
           <Link
             key={item.to}
             to={item.to}
-            className={`px-3 py-2 rounded-md md:text-[12px] text-[#172554] hover:text-white hover:bg-primary ${
+            className={`px-3 py-2 rounded-md md:text-[12px] text-primary hover:text-white hover:bg-primary ${
               location.pathname === item.to ? "bg-primary text-white" : ""
             }`}
           >

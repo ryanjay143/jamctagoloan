@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -6,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { isToday } from 'date-fns';
 
 interface EditTithesProps {
   tithe: any;
@@ -17,10 +19,20 @@ interface EditTithesProps {
 }
 
 function EditTithes({ tithe, editingTitheId, setEditingTitheId, handleEditTithe, index, setTithes }: EditTithesProps) {
+  const createdAtDate = new Date(tithe.created_at);
+
+  // Determine if the button should be enabled
+  const isButtonEnabled = isToday(createdAtDate);
+
   return (
     <Dialog open={editingTitheId === tithe.id} onOpenChange={(isOpen) => setEditingTitheId(isOpen ? tithe.id : null)}>
-      <DialogTrigger>
-        <Button className="text-white w-7 h-7 bg-green-500 hover:bg-green-400 rounded-md">
+      <DialogTrigger asChild>
+        <Button
+          className={`text-white w-7 h-7 rounded-md ${
+            isButtonEnabled ? 'bg-green-500 hover:bg-green-400' : ''
+          }`}
+          disabled={!isButtonEnabled}
+        >
           <FontAwesomeIcon icon={faPen} />
         </Button>
       </DialogTrigger>
@@ -118,7 +130,7 @@ function EditTithes({ tithe, editingTitheId, setEditingTitheId, handleEditTithe,
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 export default EditTithes;

@@ -1,28 +1,40 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faCalendarDay, faCalendarWeek, faCoins, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../../plugin/axios';
 import Swal from 'sweetalert2';
-// import { format } from 'date-fns';
+import { format, isToday, isSunday, subDays } from 'date-fns';
 import AddTithes from './dialog/AddTithes';
-import EditTithes from './dialog/EditTithes'; // Import the EditTithes component
+import EditTithes from './dialog/EditTithes';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Check } from 'lucide-react';
+import { cn } from "@/lib/utils";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function TithesGiving() {
   const [selectedMembers, setSelectedMembers] = useState<{ [key: number]: string }>({});
   const [rows, setRows] = useState([{ type: "Tithes and Offering", paymentMethod: "Cash", amount: "", notes: "" }]);
   const [members, setMembers] = useState<any[]>([]);
   const [tithes, setTithes] = useState<any[]>([]);
+  const [totalTithes, setTithesTotal] = useState<number>(0);
+  const [totalTithesLastSunday, setTithesTotalLastSunday] = useState<number>(0);
+  const [totalTithesToday, setTithesTotalToday] = useState<number>(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAddDisabled, setIsAddDisabled] = useState(false);
   const [errors, setErrors] = useState<{ [key: number]: { member?: string; amount?: string } }>({});
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const [editingTitheId, setEditingTitheId] = useState<string | null>(null); // State for tracking the editing tithe ID
+  const [searchQuery, setSearchQuery] = useState('');
+  const [editingTitheId, setEditingTitheId] = useState<string | null>(null);
+  const [selectedDateRange, setSelectedDateRange] = useState<string>('all');
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState<string>('all');
 
   useEffect(() => {
     fetchMembersAndTithes();
@@ -37,6 +49,9 @@ function TithesGiving() {
       });
       setMembers(response.data.listOfMembers);
       setTithes(response.data.tithes);
+      setTithesTotal(response.data.totalAmount);
+      setTithesTotalLastSunday(response.data.totalAmountLastSunday);
+      setTithesTotalToday(response.data.totalAmountToday);
     } catch (error) {
       console.error('Error fetching members:', error);
     }
@@ -77,19 +92,22 @@ function TithesGiving() {
           'Content-Type': 'application/json',
         },
       });
-      console.log('Response:', response.data);
 
       setRows([{ type: "Tithes and Offering", paymentMethod: "Cash", amount: "", notes: "" }]);
       setSelectedMembers({});
       setIsDialogOpen(false);
       fetchMembersAndTithes();
 
+      const message = response.data.message;
+      const isPartialSuccess = message.includes('Note: Some members already had tithes recorded today.');
+
       Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: response.data.message,
-        timer: 2000,
+        icon: isPartialSuccess ? 'warning' : 'success',
+        title: isPartialSuccess ? 'Partial Success' : 'Success',
+        text: message,
+        timer: 3000,
         showConfirmButton: false,
+        timerProgressBar: true,
       });
     } catch (error) {
       console.error('Error submitting tithes:', error);
@@ -98,14 +116,6 @@ function TithesGiving() {
       setIsAddDisabled(false);
     }
   };
-
-  // Filter tithes based on search query
-  const filteredTithes = tithes.filter((tithe) =>
-    (tithe.member?.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tithe.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    tithe.payment_method.toLowerCase().includes(searchQuery.toLowerCase()) || // Include payment method in search
-    (tithe.notes || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const handleEditTithe = async (updatedTithe: any) => {
     try {
@@ -116,17 +126,19 @@ function TithesGiving() {
       });
 
       fetchMembersAndTithes();
-      setEditingTitheId(null); // Close the dialog after editing
+      setEditingTitheId(null);
+
+      const message = response.data.message;
+      const isPartialSuccess = message.includes('Note: Some members already had tithes recorded today.');
 
       Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: response.data.message,
+        icon: isPartialSuccess ? 'warning' : 'success',
+        title: isPartialSuccess ? 'Partial Success' : 'Success',
+        text: message,
         timer: 2000,
         showConfirmButton: false,
       });
 
-      // Update the tithes list with the updated tithe
       setTithes((prevTithes) =>
         prevTithes.map((tithe) => (tithe.id === updatedTithe.id ? response.data.tithes : tithe))
       );
@@ -140,21 +152,131 @@ function TithesGiving() {
     }
   };
 
+  const months = [
+    { value: 'all', label: 'All' },
+    { value: 'january', label: 'January' },
+    { value: 'february', label: 'February' },
+    { value: 'march', label: 'March' },
+    { value: 'april', label: 'April' },
+    { value: 'may', label: 'May' },
+    { value: 'june', label: 'June' },
+    { value: 'july', label: 'July' },
+    { value: 'august', label: 'August' },
+    { value: 'september', label: 'September' },
+    { value: 'october', label: 'October' },
+    { value: 'november', label: 'November' },
+    { value: 'december', label: 'December' },
+  ];
+
+  // Filter tithes based on search query and selected date range
+  const filteredTithes = tithes.filter((tithe) => {
+    const createdAtDate = new Date(tithe.created_at);
+  
+    // Filter by selected month
+    if (selectedMonth !== 'all') {
+      const monthIndex = months.findIndex((month) => month.value === selectedMonth) - 1;
+      if (createdAtDate.getMonth() !== monthIndex) {
+        return false;
+      }
+    }
+  
+    // Filter by date range
+    if (selectedDateRange === 'today' && !isToday(createdAtDate)) {
+      return false;
+    }
+  
+    if (selectedDateRange === 'lastSunday') {
+      const lastSunday = subDays(new Date(), new Date().getDay());
+      if (!isSunday(createdAtDate) || createdAtDate < lastSunday) {
+        return false;
+      }
+    }
+  
+    // Filter by search query
+    return (
+      (tithe.member?.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tithe.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tithe.payment_method.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (tithe.notes || '').toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
   return (
     <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
       <div className='grid grid-cols-3 gap-4'>
         <div className='col-span-3'>
-          <div className='rounded-md min-h-80'>
+          <div className='rounded-md min-h-80 pl-2 md:pl-0'>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
-                <CardTitle className='text-lg md:text-base'>Tithes today</CardTitle>
-                <Input
-                  type='text'
-                  placeholder='Search'
-                  className='w-52'
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)} // Update search query
-                />
+                <CardTitle className='text-lg md:text-base md:hidden'>List of Tithes</CardTitle>
+
+                <div className='grid grid-cols-3 md:grid-cols-2 md:justify-end  md:gap-2'>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-[200px] md:w-[95%] justify-between border border-primary"
+                    >
+                      {value
+                        ? months.find((month) => month.value === value)?.label
+                        : "Select month..."}
+                      <FontAwesomeIcon icon={faAngleDown} className="opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[200px] md:w-[95%] p-0">
+                    <Command>
+                      <CommandInput placeholder="Search month..." className="h-9" />
+                      <CommandList>
+                        <CommandEmpty>No month found.</CommandEmpty>
+                        <CommandGroup>
+                          {months.map((month) => (
+                            <CommandItem
+                              key={month.value}
+                              value={month.value}
+                              onSelect={(currentValue) => {
+                                setValue(currentValue === value ? "" : currentValue);
+                                setSelectedMonth(currentValue === value ? "all" : currentValue);
+                                setOpen(false);
+                              }}
+                            >
+                              {month.label}
+                              <Check
+                                className={cn(
+                                  "ml-auto text-green-500",
+                                  value === month.value ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+
+                  <Select onValueChange={(value) => setSelectedDateRange(value)}>
+                    <SelectTrigger className='w-[200px] md:w-[95%]'>
+                      <SelectValue placeholder="Select Date Range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="today">Today</SelectItem>
+                        <SelectItem value="lastSunday">Last Sunday</SelectItem>
+                        <SelectItem value="all">All</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+
+                  <Input
+                    type='text'
+                    placeholder='Search by name, type, payment method, or notes'
+                    className='w-52 placeholder-small md:w-[95%]'
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
               </div>
               <div className='overflow-x-auto'>
                 <Table className='w-full'>
@@ -166,6 +288,7 @@ function TithesGiving() {
                       <TableHead className='md:text-xs'>Amount</TableHead>
                       <TableHead className='md:text-xs'>Type</TableHead>
                       <TableHead className='md:text-xs'>Payment Method</TableHead>
+                      <TableHead className='md:text-xs'>Date Giving</TableHead>
                       <TableHead className='md:text-xs'>Notes</TableHead>
                       <TableHead className="text-right md:text-xs">Action</TableHead>
                     </TableRow>
@@ -173,7 +296,7 @@ function TithesGiving() {
                   <TableBody>
                     {filteredTithes.length === 0 && (
                       <TableRow>
-                        <TableCell colSpan={8} className='text-center'>
+                        <TableCell colSpan={9} className='text-center'>
                           No tithes found.
                         </TableCell>
                       </TableRow>
@@ -196,7 +319,7 @@ function TithesGiving() {
                           )}
                         </TableCell>
                         <TableCell className='md:text-xs'>{tithe.member?.name || 'Unknown'}</TableCell>
-                        <TableCell className='md:text-xs'>PHP {tithe.amount}</TableCell>
+                        <TableCell className='md:text-xs'>{tithe.amount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.type}</TableCell>
                         <TableCell className='md:text-xs'>
                           {tithe.payment_method === "Cash" && (
@@ -220,6 +343,9 @@ function TithesGiving() {
                             </span>
                           )}
                         </TableCell>
+                        <TableCell className='md:text-xs'>
+                          {format(new Date(tithe.created_at), 'MMMM dd, yyyy')}
+                        </TableCell>
                         <TableCell className='md:text-xs'>{tithe.notes || "None"}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end md:flex-col md:gap-3 items-center gap-1">
@@ -238,9 +364,35 @@ function TithesGiving() {
                   </TableBody>
                 </Table>
               </div>
-              <div className='flex flex-row justify-end mt-5'>
+              <div className='flex flex-row justify-between mt-5'>
+                <div className='bg-white md:shadow-muted md:border-none border border-b-4  border-primary shadow-md rounded-lg p-4'>
+                  {selectedDateRange === 'all' && (
+                    <div className='flex items-center mb-4'>
+                      <FontAwesomeIcon icon={faCoins} className='text-yellow-500 mr-2' size='lg' />
+                      <div className='text-primary text-base font-bold'>
+                        Overall Total Tithes: {totalTithes.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
+                      </div>
+                    </div>
+                  )}
+                  {selectedDateRange === 'today' && (
+                    <div className='flex items-center mb-4'>
+                      <FontAwesomeIcon icon={faCalendarDay} className='text-blue-500 mr-2' size='lg' />
+                      <div className='text-primary text-base font-bold'>
+                        Total Tithes Today: {totalTithesToday.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
+                      </div>
+                    </div>
+                  )}
+                  {selectedDateRange === 'lastSunday' && (
+                    <div className='flex items-center'>
+                      <FontAwesomeIcon icon={faCalendarWeek} className='text-green-500 mr-2' size='lg' />
+                      <div className='text-primary text-base font-bold'>
+                        Total Tithes Last Sunday: {totalTithesLastSunday.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div>
-                  <p className='text-[#172554] text-base w-full font-bold'>Showing 1 to {filteredTithes.length} entries</p>
+                  <p className='text-primary text-base w-full font-bold'>Showing 1 to {filteredTithes.length} entries</p>
                 </div>
               </div>
             </CardContent>

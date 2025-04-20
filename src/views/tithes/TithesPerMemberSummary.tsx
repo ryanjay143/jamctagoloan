@@ -12,7 +12,7 @@ function TithesPerMemberSummary() {
     <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
         <div className='grid grid-cols-3 gap-4'>
             <div className='col-span-3'>
-                <div className='rounded-md min-h-80'> 
+                <div className='rounded-md min-h-80 pl-2 md:pl-0'> 
                 <CardContent>
               <div className='py-2 flex flex-row justify-between'>
               <CardTitle className='text-lg md:text-base'>Overall Summary</CardTitle>

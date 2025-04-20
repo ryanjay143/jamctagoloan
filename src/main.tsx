@@ -14,7 +14,7 @@ const AttendanceHistory = lazy(() => wait(3000).then(() => import("./views/user/
 const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember")));
 const TithesContainer = lazy(() => wait(3000).then(() => import("./views/tithes/TithesContainer")));
 const TithesGiving = lazy(() => wait(3000).then(() => import("./views/tithes/TithesGiving")));
-const TithesHistory = lazy(() => wait(3000).then(() => import("./views/tithes/TithesHistory")));
+const TithesExpense = lazy(() => wait(3000).then(() => import("./views/tithes/TithesExpense")));
 const TithesReport = lazy(() => wait(3000).then(() => import("./views/tithes/TithesReport")));
 const TithesPerMemberSummary = lazy(() => wait(3000).then(() => import("./views/tithes/TithesPerMemberSummary")));
 const AttendanceReport = lazy(() => wait(3000).then(() => import("./views/user/AttendanceReport")));
@@ -47,10 +47,10 @@ const routes = [
             ),
           },
           {
-            path: "history",
+            path: "expense",
             element: (
               <Suspense fallback={<Loader />}>
-                <TithesHistory />
+                <TithesExpense />
               </Suspense>
             ),
           },

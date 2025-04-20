@@ -163,7 +163,7 @@ const AddMember: React.FC = () => {
     <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
       <div className='grid grid-cols-3 gap-4'>
         <div className='col-span-3'>
-          <div className='rounded-md min-h-80'>
+          <div className='rounded-md min-h-80 pl-2 md:pl-0'>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
               <CardTitle className='text-lg md:text-base'>List of Member</CardTitle>
@@ -234,9 +234,9 @@ const AddMember: React.FC = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className='flex flex-row justify-center mt-5'>
+              <div className='flex flex-row justify-end mt-5'>
                 <div>
-                  <p className='text-[#172554] text-base w-full font-bold'>Showing 1 to {filteredMembers.length} entries</p>
+                  <p className='text-primary text-base w-full font-bold'>Showing 1 to {filteredMembers.length} entries</p>
                 </div>
               </div>
             </CardContent>

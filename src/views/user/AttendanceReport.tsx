@@ -151,7 +151,7 @@ function AttendanceReport() {
     <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
       <div className='grid grid-cols-3 gap-4'>
         <div className='col-span-3'>
-          <div className='rounded-md min-h-80' ref={componentRef}>
+          <div className='rounded-md min-h-80 pl-2 md:pl-0' ref={componentRef}>
             <CardHeader>
                 <div className='flex justify-between'>
                   <CardTitle className='text-lg md:text-base'>Overall Attendance Report</CardTitle>
@@ -302,7 +302,7 @@ function AttendanceReport() {
               </div>
               <div className='flex flex-row justify-end mt-5'>
                 <div>
-                  <p className='text-[#172554] text-base w-full font-bold'>Showing 1 to {filteredAttendance.length} entries</p>
+                  <p className='text-primary text-base w-full font-bold'>Showing 1 to {filteredAttendance.length} entries</p>
                 </div>
               </div>
               <div className='grid grid-cols-4 md:grid-cols-2 gap-4 mt-5'>

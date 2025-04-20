@@ -124,9 +124,10 @@ const AddTithes: React.FC<AddTithesProps> = ({
                       <SelectValue placeholder="Select a type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Tithes and Offering">Tithes and Offering</SelectItem>
-                      <SelectItem value="Help fund">Help fund</SelectItem>
-                      <SelectItem value="Solomon Pledge">Solomon Pledge</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Tithes and Offering">Tithes and Offering</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Help fund">Help fund</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Solomon Pledge">Solomon Pledge</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Others">Others...</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -148,11 +149,11 @@ const AddTithes: React.FC<AddTithesProps> = ({
                     <SelectTrigger>
                       <SelectValue placeholder="Select a payment method" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Cash">Cash</SelectItem>
-                      <SelectItem value="Gcash">Gcash</SelectItem>
-                      <SelectItem value="Bank transfer">Bank transfer</SelectItem>
-                      <SelectItem value="Others">Others</SelectItem>
+                    <SelectContent >
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Cash">Cash</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Gcash">Gcash</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Bank transfer">Bank transfer</SelectItem>
+                      <SelectItem className='cursor-pointer hover:bg-gray-200' value="Others">Others...</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
