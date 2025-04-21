@@ -1,10 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
-import NavLink from "./Layouts/NavLink";
+import NavLink from "./layouts/NavLink";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import img from '../../assets/image.jpg'
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import Footer from "./layouts/Footer";
 
 function Dashboard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -16,8 +17,8 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex items-center justify-between p-4 bg-white shadow-md md:mt-16">
-        <div className="text-2xl font-bold ml-64 md:ml-0">Church Attendance Dashboard</div>
+      <div className="flex items-center justify-between py-4 bg-white shadow-md md:mt-16">
+        <div className="text-2xl font-bold ml-64 md:pl-5 md:ml-0 md:text-base">JAMC Church Attendance</div>
         <nav className="relative flex space-x-4">
           <div className="relative">
             <button onClick={toggleDropdown} className="flex shadowm-md rounded-md p-1 border-b-4 items-center focus:outline-none">
@@ -41,7 +42,7 @@ function Dashboard() {
         </nav>
       </div>
 
-      <div className="flex-grow p-4 bg-gray-100">
+      <div className="flex-grow bg-gray-100">
         <div className="flex items-center justify-between mb-4">
           <NavLink />
         </div>
@@ -50,9 +51,7 @@ function Dashboard() {
         </div>
       </div>
 
-      <footer className="flex items-center justify-center h-16 bg-gray-200">
-        <p className="text-gray-600">© 2025 JAMC Tagoloan</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

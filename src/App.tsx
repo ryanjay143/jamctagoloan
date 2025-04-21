@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@/components/themeProvider";
-import Sidebar from "./views/user/Layouts/Sidebard";
+import Sidebar from "./views/user/layouts/Sidebar";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

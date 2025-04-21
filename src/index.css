@@ -71,7 +71,9 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
-
+  .placeholder-small::placeholder {
+    @apply text-xs; /* Use Tailwind's text-xs utility for small font size */
+  }
 
   /* Custom Scrollbar Styling */
   ::-webkit-scrollbar {

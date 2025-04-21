@@ -5,27 +5,77 @@ import NotFound from './notFound';
 import './index.css';
 import Loader from './components/loader';
 import App from './App';
-import AttendanceReport from './views/user/Admin/AttendanceReport';
-import AttendanceHistory from './views/user/Admin/AttendanceHistory';
 import Login from './views/auth/Login';
 
+
+
 // Lazy loading components with a delay
-const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Dashboard")));
-const TrackAttendance = lazy(() => wait(3000).then(() => import("./views/user/TrackAttendance")));
-const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember/AddMemberContainer")));
+const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Attendance")));
+const TrackAttendance = lazy(() => wait(3000).then(() => import("./views/user/CheckAttendance")));
+const AttendanceHistory = lazy(() => wait(3000).then(() => import("./views/user/AttendanceRecord")));
+const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember")));
 const TithesContainer = lazy(() => wait(3000).then(() => import("./views/tithes/TithesContainer")));
+const TithesGiving = lazy(() => wait(3000).then(() => import("./views/tithes/TithesGiving")));
+const TithesExpense = lazy(() => wait(3000).then(() => import("./views/tithes/TithesExpense")));
+const TithesReport = lazy(() => wait(3000).then(() => import("./views/tithes/TithesReport")));
+const TithesPerMemberSummary = lazy(() => wait(3000).then(() => import("./views/tithes/TithesPerMemberSummary")));
+const AttendanceReport = lazy(() => wait(3000).then(() => import("./views/user/Admin/AttendanceReport")));
+
 // Route configuration
 const routes = [
+
   {
     path: "/jamc/tagoloan",
     element: <App />,
     children: [
       {
         path: "",
-        element: <Navigate to="/jamc/tagoloan/user-dashboard" />,
+        element: <Navigate to="/jamc/tagoloan/attendance" />,
       },
       {
-        path: "user-dashboard",
+        path: "tithes-offering",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TithesContainer />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesGiving />
+              </Suspense>
+            ),
+          },
+          {
+            path: "expense",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesExpense />
+              </Suspense>
+            ),
+          },
+          {
+            path: "report",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesReport />
+              </Suspense>
+            ),
+          },
+          {
+            path: "per-member-summary",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesPerMemberSummary />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "attendance",
         element: (
           <Suspense fallback={<Loader />}>
             <Dashboard />
@@ -89,6 +139,20 @@ const routes = [
     ),
   }
   
+  // {
+  //   path: "/jamc/tagoloan/tithes-offering",
+  //   element: (
+  //     <Suspense fallback={<Loader />}>
+  //       <TithesContainer />
+  //     </Suspense>
+  //   ),
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <Navigate to="/jamc/tagoloan/tithes-offering" />,
+  //     },
+  //   ],
+  // },
 ];
 
 
