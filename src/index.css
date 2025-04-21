@@ -75,6 +75,7 @@ body {
     @apply text-xs; /* Use Tailwind's text-xs utility for small font size */
   }
 
+
   /* Custom Scrollbar Styling */
   ::-webkit-scrollbar {
     width: 6px; /* Width of the scrollbar */
