@@ -7,6 +7,7 @@ import Loader from './components/loader';
 import App from './App';
 import AttendanceReport from './views/user/Admin/AttendanceReport';
 import AttendanceHistory from './views/user/Admin/AttendanceHistory';
+import Login from './views/auth/Login';
 
 // Lazy loading components with a delay
 const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Dashboard")));
@@ -79,6 +80,15 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <Login />
+      </Suspense>
+    ),
+  }
+  
 ];
 
 
