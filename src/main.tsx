@@ -5,14 +5,14 @@ import NotFound from './notFound';
 import './index.css';
 import Loader from './components/loader';
 import App from './App';
-import AttendanceReport from './views/user/AttendanceReport';
+import AttendanceReport from './views/user/Admin/AttendanceReport';
+import AttendanceHistory from './views/user/Admin/AttendanceHistory';
 
 // Lazy loading components with a delay
 const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Dashboard")));
 const TrackAttendance = lazy(() => wait(3000).then(() => import("./views/user/TrackAttendance")));
-const AttendanceHistory = lazy(() => wait(3000).then(() => import("./views/user/AttendanceHistory")));
-const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember")));
-
+const AddMember = lazy(() => wait(3000).then(() => import("./views/user/AddMember/AddMemberContainer")));
+const TithesContainer = lazy(() => wait(3000).then(() => import("./views/tithes/TithesContainer")));
 // Route configuration
 const routes = [
   {
@@ -64,6 +64,14 @@ const routes = [
             ),
           },
         ],
+      },
+      {
+        path: "tithes-offering",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <TithesContainer />
+          </Suspense>
+        ),
       },
       {
         path: "*",

@@ -11,7 +11,7 @@ function AdminSidebar() {
 
   const links = [
     { path: "/jamc/tagoloan", icon: faTachometerAlt, label: "Dashboard" },
-    { path: "/jamc/tagoloan/titthes&offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
+    { path: "/jamc/tagoloan/tithes-offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
   ];
 
   const handleNavigation = (path: any) => {
