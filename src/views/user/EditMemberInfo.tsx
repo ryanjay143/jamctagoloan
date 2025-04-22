@@ -83,11 +83,11 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
     <div>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="text-white w-7 h-7 rounded-md">
+          <Button className="text-white w-7 h-7 bg-green-500 hover:bg-green-400 rounded-md">
             <FontAwesomeIcon icon={faPen} />
           </Button>
         </DialogTrigger>
-        <DialogContent className='overflow-auto md:max-h-[90vh] md:max-w-[400px]'>
+        <DialogContent className='overflow-auto md:max-h-[90vh]  max-h-[100%] md:max-w-[400px]'>
           <DialogHeader className='text-start'>
             <DialogTitle>Edit Member Info</DialogTitle>
             <DialogDescription>
@@ -151,7 +151,7 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
               onChange={handleEditFileChange}
               accept="image/*"
             />
-            {editPhotoPreview && <img src={editPhotoPreview} alt="Preview" className="w-full h-60 rounded-md" />}
+            {editPhotoPreview && <img src={editPhotoPreview} alt="Preview" className="w-full rounded-md" />}
           </div>
 
           <Button onClick={handleSave} disabled={loading}>

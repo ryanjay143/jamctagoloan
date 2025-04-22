@@ -211,7 +211,7 @@ function TrackAttendance() {
           <div className='rounded-md min-h-80'>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
-                <CardTitle className='text-3xl md:text-base'>List of Attendance</CardTitle>
+                <CardTitle className='text-lg md:text-base'>List of Attendance</CardTitle>
                 <Input
                   type='text'
                   placeholder='Search'

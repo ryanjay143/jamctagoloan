@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../../plugin/axios';
-import { CardContent } from '@/components/ui/card';
+import { CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Swal from 'sweetalert2';
@@ -166,7 +166,7 @@ const AddMember: React.FC = () => {
           <div className='rounded-md min-h-80'>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
-                <label htmlFor="" className='text-3xl md:text-base'>List of members</label>
+              <CardTitle className='text-lg md:text-base'>List of Member</CardTitle>
                 <Input
                   type='text'
                   placeholder='Search'

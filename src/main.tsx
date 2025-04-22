@@ -5,7 +5,7 @@ import NotFound from './notFound';
 import './index.css';
 import Loader from './components/loader';
 import App from './App';
-import AttendanceReport from './views/user/AttendanceReport';
+
 
 // Lazy loading components with a delay
 const Dashboard = lazy(() => wait(3000).then(() => import("./views/user/Attendance")));
@@ -16,6 +16,8 @@ const TithesContainer = lazy(() => wait(3000).then(() => import("./views/tithes/
 const TithesGiving = lazy(() => wait(3000).then(() => import("./views/tithes/TithesGiving")));
 const TithesHistory = lazy(() => wait(3000).then(() => import("./views/tithes/TithesHistory")));
 const TithesReport = lazy(() => wait(3000).then(() => import("./views/tithes/TithesReport")));
+const TithesPerMemberSummary = lazy(() => wait(3000).then(() => import("./views/tithes/TithesPerMemberSummary")));
+const AttendanceReport = lazy(() => wait(3000).then(() => import("./views/user/AttendanceReport")));
 
 // Route configuration
 const routes = [
@@ -64,7 +66,7 @@ const routes = [
             path: "per-member-summary",
             element: (
               <Suspense fallback={<Loader />}>
-                <TithesReport />
+                <TithesPerMemberSummary />
               </Suspense>
             ),
           },

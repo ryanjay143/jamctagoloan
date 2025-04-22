@@ -154,9 +154,7 @@ function AttendanceReport() {
           <div className='rounded-md min-h-80' ref={componentRef}>
             <CardHeader>
                 <div className='flex justify-between'>
-                  <div>
-                      <CardTitle className='text-3xl md:text-lg'>Overall Attendance Report</CardTitle>
-                  </div>
+                  <CardTitle className='text-lg md:text-base'>Overall Attendance Report</CardTitle>
 
                   <div className='flex flex-row space-x-2'>
                     <Button className='hover:bg-white bg-green-500 hover:text-black' onClick={handleExcel}>
@@ -308,12 +306,12 @@ function AttendanceReport() {
                 </div>
               </div>
               <div className='grid grid-cols-4 md:grid-cols-2 gap-4 mt-5'>
-                <div className='text-2xl md:text-base font-bold text-green-500'>Overall Total Present: {totalPresent}</div>
-                <div className='text-2xl font-bold md:text-base text-red-500'>Overall Total Absent: {totalAbsent}</div>
+                <div className='text-lg md:text-base font-bold text-green-500'>Overall Total Present: {totalPresent}</div>
+                <div className='text-lg font-bold md:text-base text-red-500'>Overall Total Absent: {totalAbsent}</div>
                 {selectedRole === 'All' && (
                   <>
-                    <div className='text-2xl font-bold md:text-base text-blue-500'>Kids Total Present: {totalKidsPresent}</div>
-                    <div className='text-2xl font-bold md:text-base text-orange-500'>Adult Total Present: {totalAdultsPresent}</div>
+                    <div className='text-lg font-bold md:text-base text-blue-500'>Kids Total Present: {totalKidsPresent}</div>
+                    <div className='text-lg font-bold md:text-base text-orange-500'>Adult Total Present: {totalAdultsPresent}</div>
                   </>
                 )}
               </div>

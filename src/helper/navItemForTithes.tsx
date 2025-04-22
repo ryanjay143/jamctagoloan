@@ -1,11 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faGift, faList12, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faHistory, faGift, faList12, faUser, faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
 
 export const navItemForTithes = [
     {
-      label: "Tithes Record Giving",
+      label: "Tithes Giving",
       to: "/jamc/tagoloan/tithes-offering",
       icon: <FontAwesomeIcon icon={faGift} className="mr-2" />,
+    },
+    {
+      label: "Expense",
+      to: "/jamc/tagoloan/expense",
+      icon: <FontAwesomeIcon icon={faMoneyCheck} className="mr-2" />,
     },
     {
       label: "History",

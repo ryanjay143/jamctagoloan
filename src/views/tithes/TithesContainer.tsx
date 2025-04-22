@@ -18,7 +18,7 @@ function TithesContainer() {
   return (
     <div className="flex flex-col min-h-screen">
     <div className="flex items-center justify-between py-4 bg-white shadow-md md:mt-16">
-      <div className="text-2xl font-bold ml-64 md:ml-0">Tithes & Offering</div>
+      <div className="text-2xl font-bold ml-64 md:pl-5 md:ml-0 md:text-base">Tithes & Offering</div>
       <nav className="relative flex space-x-4">
         <div className="relative">
           <button onClick={toggleDropdown} className="flex shadowm-md rounded-md p-1 border-b-4 items-center focus:outline-none">

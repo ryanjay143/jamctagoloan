@@ -46,7 +46,7 @@ function AdminSidebar() {
       {/* Sidebar */}
       <div
         className={`fixed h-full bg-primary text-accent md:z-40 z-9999 ${
-          isOpen ? "md:w-[240px] md:opacity-100" : "md:w-0 md:opacity-0"
+          isOpen ? "md:w-[240px] md:opacity-100" : "md:w-0 w-[18%] md:opacity-0"
         } md:transition-all md:duration-300 w-60 md:ease-in-out md:flex md:rounded-r-[5px] rounded-r-[5px] overflow-hidden ${
           !isOpen && "md:hidden"
         }`}

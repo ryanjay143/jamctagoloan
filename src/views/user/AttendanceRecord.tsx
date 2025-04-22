@@ -277,7 +277,7 @@ function AttendanceHistory() {
                                 ) : (
                                   <Avatar>
                                     <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    <AvatarFallback>{today.member?.name}</AvatarFallback>
                                   </Avatar>
                                 )}
                               </TableCell>
