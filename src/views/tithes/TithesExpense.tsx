@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
+import { format } from 'date-fns';
 
 // Define a type for the expense object
 type Expense = {
@@ -153,12 +154,19 @@ function TithesExpense() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
+                    {expense.length === 0 && (
+                      <TableRow>
+                        <TableCell colSpan={5} className='text-center text-gray-500'>No Expense found</TableCell>
+                      </TableRow>
+                    )}
                     {expense.map((expenses, index) => (
                       <TableRow key={expenses.id}>
                         <TableCell className='md:text-xs'>{index + 1}</TableCell>
-                        <TableCell className='md:text-xs uppercase font-bold'>{expenses.date_created}</TableCell>
+                        <TableCell className='md:text-xs uppercase font-bold'>{format(new Date(expenses.date_created), 'MMMM dd, yyyy')}</TableCell>
                         <TableCell className='md:text-xs uppercase font-bold'>{expenses.title}</TableCell>
-                        <TableCell className='md:text-xs font-bold'>{expenses.amount}</TableCell>
+                        <TableCell className='md:text-xs font-bold'>
+                          {expenses.amount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
+                        </TableCell>
                         <TableCell className='md:text-xs'>
                           <div className="flex justify-end md:flex-col md:gap-3 items-center gap-1">
                             <Button
@@ -168,7 +176,6 @@ function TithesExpense() {
                             </Button>
                             <Button
                               className='text-white bg-red-500 w-7 h-7 hover:bg-red-400 rounded-md'
-                              onClick={() => handleDeleteRow(index)}
                             >
                               <FontAwesomeIcon icon={faTrash} />
                             </Button>

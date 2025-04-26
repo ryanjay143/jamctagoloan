@@ -306,12 +306,12 @@ function AttendanceReport() {
                 </div>
               </div>
               <div className='grid grid-cols-4 md:grid-cols-2 gap-4 mt-5'>
-                <div className='text-lg md:text-base font-bold text-green-500'>Overall Total Present: {totalPresent}</div>
-                <div className='text-lg font-bold md:text-base text-red-500'>Overall Total Absent: {totalAbsent}</div>
+                <div className='text-sm md:text-base font-bold text-green-500'>Overall Total Present: {totalPresent}</div>
+                <div className='text-sm font-bold md:text-base text-red-500'>Overall Total Absent: {totalAbsent}</div>
                 {selectedRole === 'All' && (
                   <>
-                    <div className='text-lg font-bold md:text-base text-blue-500'>Kids Total Present: {totalKidsPresent}</div>
-                    <div className='text-lg font-bold md:text-base text-orange-500'>Adult Total Present: {totalAdultsPresent}</div>
+                    <div className='text-sm font-bold md:text-base text-blue-500'>Kids Total Present: {totalKidsPresent}</div>
+                    <div className='text-sm font-bold md:text-base text-orange-500'>Adult Total Present: {totalAdultsPresent}</div>
                   </>
                 )}
               </div>

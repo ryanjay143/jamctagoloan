@@ -1,27 +1,15 @@
-<<<<<<<< HEAD:src/views/user/Admin/AttendanceHistory.tsx
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { faChurch, faDatabase, faUserPlus, faUserSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import img from '../../assets/image.jpg'
-import axios from '../../../plugin/axios';
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-========
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { faChild, faChurch, faDatabase, faPeopleGroup, faUserPlus, faUserSlash, faX } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from '../../plugin/axios';
+import axios from '../../../plugin/axios';
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { toast, ToastContainer } from 'react-toastify';
->>>>>>>> 293f1f08d97e94e666921764235b9684157f64b4:src/views/user/AttendanceRecord.tsx
+
 
 function AttendanceHistory() {
   const [attendanceCount, setAttendanceCount] = useState<number>(0);

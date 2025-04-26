@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { faAngleDown, faCalendarDay, faCalendarWeek, faCoins, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../../plugin/axios';
 import Swal from 'sweetalert2';
-import { format, isToday, isSunday, subDays } from 'date-fns';
+import { format } from 'date-fns';
 import AddTithes from './dialog/AddTithes';
 import EditTithes from './dialog/EditTithes';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Check } from 'lucide-react';
-import { cn } from "@/lib/utils";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+// import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+// import { Check } from 'lucide-react';
+// import { cn } from "@/lib/utils";
+// import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+// import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function TithesGiving() {
   const [selectedMembers, setSelectedMembers] = useState<{ [key: number]: string }>({});
   const [rows, setRows] = useState([{ type: "Tithes and Offering", paymentMethod: "Cash", amount: "", notes: "" }]);
   const [members, setMembers] = useState<any[]>([]);
   const [tithes, setTithes] = useState<any[]>([]);
-  const [totalTithes, setTithesTotal] = useState<number>(0);
-  const [totalTithesLastSunday, setTithesTotalLastSunday] = useState<number>(0);
-  const [totalTithesToday, setTithesTotalToday] = useState<number>(0);
+  // const [totalTithes, setTithesTotal] = useState<number>(0);
+  // const [totalTithesLastSunday, setTithesTotalLastSunday] = useState<number>(0);
+  // const [totalTithesToday, setTithesTotalToday] = useState<number>(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAddDisabled, setIsAddDisabled] = useState(false);
   const [errors, setErrors] = useState<{ [key: number]: { member?: string; amount?: string } }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [editingTitheId, setEditingTitheId] = useState<string | null>(null);
-  const [selectedDateRange, setSelectedDateRange] = useState<string>('all');
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState<string>('all');
+  // const [selectedDateRange, setSelectedDateRange] = useState<string>('all');
+  // const [open, setOpen] = useState(false);
+  // const [value, setValue] = useState("");
+  // const [selectedMonth, setSelectedMonth] = useState<string>('all');
 
   useEffect(() => {
     fetchMembersAndTithes();
@@ -49,9 +49,9 @@ function TithesGiving() {
       });
       setMembers(response.data.listOfMembers);
       setTithes(response.data.tithes);
-      setTithesTotal(response.data.totalAmount);
-      setTithesTotalLastSunday(response.data.totalAmountLastSunday);
-      setTithesTotalToday(response.data.totalAmountToday);
+      // setTithesTotal(response.data.totalAmount);
+      // setTithesTotalLastSunday(response.data.totalAmountLastSunday);
+      // setTithesTotalToday(response.data.totalAmountToday);
     } catch (error) {
       console.error('Error fetching members:', error);
     }
@@ -152,45 +152,45 @@ function TithesGiving() {
     }
   };
 
-  const months = [
-    { value: 'all', label: 'All' },
-    { value: 'january', label: 'January' },
-    { value: 'february', label: 'February' },
-    { value: 'march', label: 'March' },
-    { value: 'april', label: 'April' },
-    { value: 'may', label: 'May' },
-    { value: 'june', label: 'June' },
-    { value: 'july', label: 'July' },
-    { value: 'august', label: 'August' },
-    { value: 'september', label: 'September' },
-    { value: 'october', label: 'October' },
-    { value: 'november', label: 'November' },
-    { value: 'december', label: 'December' },
-  ];
+  // const months = [
+  //   { value: 'all', label: 'All' },
+  //   { value: 'january', label: 'January' },
+  //   { value: 'february', label: 'February' },
+  //   { value: 'march', label: 'March' },
+  //   { value: 'april', label: 'April' },
+  //   { value: 'may', label: 'May' },
+  //   { value: 'june', label: 'June' },
+  //   { value: 'july', label: 'July' },
+  //   { value: 'august', label: 'August' },
+  //   { value: 'september', label: 'September' },
+  //   { value: 'october', label: 'October' },
+  //   { value: 'november', label: 'November' },
+  //   { value: 'december', label: 'December' },
+  // ];
 
   // Filter tithes based on search query and selected date range
   const filteredTithes = tithes.filter((tithe) => {
-    const createdAtDate = new Date(tithe.created_at);
+    // const createdAtDate = new Date(tithe.created_at);
   
-    // Filter by selected month
-    if (selectedMonth !== 'all') {
-      const monthIndex = months.findIndex((month) => month.value === selectedMonth) - 1;
-      if (createdAtDate.getMonth() !== monthIndex) {
-        return false;
-      }
-    }
+    // // Filter by selected month
+    // if (selectedMonth !== 'all') {
+    //   const monthIndex = months.findIndex((month) => month.value === selectedMonth) - 1;
+    //   if (createdAtDate.getMonth() !== monthIndex) {
+    //     return false;
+    //   }
+    // }
   
-    // Filter by date range
-    if (selectedDateRange === 'today' && !isToday(createdAtDate)) {
-      return false;
-    }
+    // // Filter by date range
+    // if (selectedDateRange === 'today' && !isToday(createdAtDate)) {
+    //   return false;
+    // }
   
-    if (selectedDateRange === 'lastSunday') {
-      const lastSunday = subDays(new Date(), new Date().getDay());
-      if (!isSunday(createdAtDate) || createdAtDate < lastSunday) {
-        return false;
-      }
-    }
+    // if (selectedDateRange === 'lastSunday') {
+    //   const lastSunday = subDays(new Date(), new Date().getDay());
+    //   if (!isSunday(createdAtDate) || createdAtDate < lastSunday) {
+    //     return false;
+    //   }
+    // }
   
     // Filter by search query
     return (
@@ -208,10 +208,10 @@ function TithesGiving() {
           <div className='rounded-md min-h-80 pl-2 md:pl-0'>
             <CardContent>
               <div className='py-2 flex flex-row justify-between'>
-                <CardTitle className='text-lg md:text-base md:hidden'>List of Tithes</CardTitle>
+                <CardTitle className='text-lg md:text-base md:hidden'>Tithes today</CardTitle>
 
-                <div className='grid grid-cols-3 md:grid-cols-2 md:justify-end  md:gap-2'>
-                <Popover open={open} onOpenChange={setOpen}>
+                <div className='grid md:justify-end md:gap-2'>
+                {/* <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
@@ -254,9 +254,9 @@ function TithesGiving() {
                       </CommandList>
                     </Command>
                   </PopoverContent>
-                </Popover>
+                </Popover> */}
 
-                  <Select onValueChange={(value) => setSelectedDateRange(value)}>
+                  {/* <Select onValueChange={(value) => setSelectedDateRange(value)}>
                     <SelectTrigger className='w-[200px] md:w-[95%]'>
                       <SelectValue placeholder="Select Date Range" />
                     </SelectTrigger>
@@ -267,7 +267,7 @@ function TithesGiving() {
                         <SelectItem value="all">All</SelectItem>
                       </SelectGroup>
                     </SelectContent>
-                  </Select>
+                  </Select> */}
 
                   <Input
                     type='text'
@@ -318,7 +318,7 @@ function TithesGiving() {
                             </Avatar>
                           )}
                         </TableCell>
-                        <TableCell className='md:text-xs'>{tithe.member?.name || 'Unknown'}</TableCell>
+                        <TableCell className='md:text-xs'>{tithe.member?.name}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.amount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.type}</TableCell>
                         <TableCell className='md:text-xs'>
@@ -344,7 +344,7 @@ function TithesGiving() {
                           )}
                         </TableCell>
                         <TableCell className='md:text-xs'>
-                          {format(new Date(tithe.created_at), 'MMMM dd, yyyy')}
+                          {format(new Date(tithe.date_created), 'MMMM dd, yyyy')}
                         </TableCell>
                         <TableCell className='md:text-xs'>{tithe.notes || "None"}</TableCell>
                         <TableCell className="text-right">
@@ -364,7 +364,7 @@ function TithesGiving() {
                   </TableBody>
                 </Table>
               </div>
-              <div className='flex flex-row justify-between mt-5'>
+              {/* <div className='flex flex-row justify-between mt-5'>
                 <div className='bg-white md:shadow-muted md:border-none border border-b-4  border-primary shadow-md rounded-lg p-4'>
                   {selectedDateRange === 'all' && (
                     <div className='flex items-center mb-4'>
@@ -390,11 +390,11 @@ function TithesGiving() {
                       </div>
                     </div>
                   )}
-                </div>
-                <div>
+                  </div>
+                  <div>
                   <p className='text-primary text-base w-full font-bold'>Showing 1 to {filteredTithes.length} entries</p>
                 </div>
-              </div>
+              </div> */}
             </CardContent>
           </div>
         </div>
