@@ -34,6 +34,22 @@ const TableReport = React.forwardRef<
 ))
 Table.displayName = "TableReport"
 
+const TableDeno = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement>
+>(({ className, ...props }, ref) => (
+  <div className="relative w-full">
+    <div className="overflow-auto"> {/* Add scrollable container */}
+      <table
+        ref={ref}
+        className={cn("w-full caption-bottom text-sm", className)}
+        {...props}
+      />
+    </div>
+  </div>
+))
+Table.displayName = "TableDeno"
+
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
@@ -140,4 +156,5 @@ export {
   TableRow,
   TableCell,
   TableCaption,
+  TableDeno,
 }

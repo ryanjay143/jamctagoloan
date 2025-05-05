@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../../plugin/axios';
 import Swal from 'sweetalert2';
@@ -152,45 +152,8 @@ function TithesGiving() {
     }
   };
 
-  // const months = [
-  //   { value: 'all', label: 'All' },
-  //   { value: 'january', label: 'January' },
-  //   { value: 'february', label: 'February' },
-  //   { value: 'march', label: 'March' },
-  //   { value: 'april', label: 'April' },
-  //   { value: 'may', label: 'May' },
-  //   { value: 'june', label: 'June' },
-  //   { value: 'july', label: 'July' },
-  //   { value: 'august', label: 'August' },
-  //   { value: 'september', label: 'September' },
-  //   { value: 'october', label: 'October' },
-  //   { value: 'november', label: 'November' },
-  //   { value: 'december', label: 'December' },
-  // ];
-
   // Filter tithes based on search query and selected date range
   const filteredTithes = tithes.filter((tithe) => {
-    // const createdAtDate = new Date(tithe.created_at);
-  
-    // // Filter by selected month
-    // if (selectedMonth !== 'all') {
-    //   const monthIndex = months.findIndex((month) => month.value === selectedMonth) - 1;
-    //   if (createdAtDate.getMonth() !== monthIndex) {
-    //     return false;
-    //   }
-    // }
-  
-    // // Filter by date range
-    // if (selectedDateRange === 'today' && !isToday(createdAtDate)) {
-    //   return false;
-    // }
-  
-    // if (selectedDateRange === 'lastSunday') {
-    //   const lastSunday = subDays(new Date(), new Date().getDay());
-    //   if (!isSunday(createdAtDate) || createdAtDate < lastSunday) {
-    //     return false;
-    //   }
-    // }
   
     // Filter by search query
     return (
@@ -211,64 +174,6 @@ function TithesGiving() {
                 <CardTitle className='text-lg md:text-base md:hidden'>Tithes today</CardTitle>
 
                 <div className='grid md:justify-end md:gap-2'>
-                {/* <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={open}
-                      className="w-[200px] md:w-[95%] justify-between border border-primary"
-                    >
-                      {value
-                        ? months.find((month) => month.value === value)?.label
-                        : "Select month..."}
-                      <FontAwesomeIcon icon={faAngleDown} className="opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[200px] md:w-[95%] p-0">
-                    <Command>
-                      <CommandInput placeholder="Search month..." className="h-9" />
-                      <CommandList>
-                        <CommandEmpty>No month found.</CommandEmpty>
-                        <CommandGroup>
-                          {months.map((month) => (
-                            <CommandItem
-                              key={month.value}
-                              value={month.value}
-                              onSelect={(currentValue) => {
-                                setValue(currentValue === value ? "" : currentValue);
-                                setSelectedMonth(currentValue === value ? "all" : currentValue);
-                                setOpen(false);
-                              }}
-                            >
-                              {month.label}
-                              <Check
-                                className={cn(
-                                  "ml-auto text-green-500",
-                                  value === month.value ? "opacity-100" : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover> */}
-
-                  {/* <Select onValueChange={(value) => setSelectedDateRange(value)}>
-                    <SelectTrigger className='w-[200px] md:w-[95%]'>
-                      <SelectValue placeholder="Select Date Range" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="today">Today</SelectItem>
-                        <SelectItem value="lastSunday">Last Sunday</SelectItem>
-                        <SelectItem value="all">All</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select> */}
-
                   <Input
                     type='text'
                     placeholder='Search by name, type, payment method, or notes'
@@ -357,6 +262,34 @@ function TithesGiving() {
                               index={index}
                               setTithes={setTithes}
                             />
+
+                            <Button
+                              variant="destructive"
+                              size="icon"
+                              onClick={async () => {
+                                const result = await Swal.fire({
+                                  title: 'Are you sure?',
+                                  text: "You won't be able to revert this!",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonText: 'Yes, delete it!',
+                                  cancelButtonText: 'No, cancel!',
+                                });
+                                if (result.isConfirmed) {
+                                  try {
+                                    await axios.delete(`tithes/${tithe.id}`);
+                                    fetchMembersAndTithes();
+                                    Swal.fire('Deleted!', 'The tithes has been deleted.', 'success');
+                                  } catch (error) {
+                                    console.error('Error deleting tithes:', error);
+                                    Swal.fire('Error!', 'Failed to delete tithes. Please try again.', 'error');
+                                  }
+                                }
+                              }}
+                              className="h-8 w-8 rounded-md hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </Button>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -364,37 +297,6 @@ function TithesGiving() {
                   </TableBody>
                 </Table>
               </div>
-              {/* <div className='flex flex-row justify-between mt-5'>
-                <div className='bg-white md:shadow-muted md:border-none border border-b-4  border-primary shadow-md rounded-lg p-4'>
-                  {selectedDateRange === 'all' && (
-                    <div className='flex items-center mb-4'>
-                      <FontAwesomeIcon icon={faCoins} className='text-yellow-500 mr-2' size='lg' />
-                      <div className='text-primary text-base font-bold'>
-                        Overall Total Tithes: {totalTithes.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
-                      </div>
-                    </div>
-                  )}
-                  {selectedDateRange === 'today' && (
-                    <div className='flex items-center mb-4'>
-                      <FontAwesomeIcon icon={faCalendarDay} className='text-blue-500 mr-2' size='lg' />
-                      <div className='text-primary text-base font-bold'>
-                        Total Tithes Today: {totalTithesToday.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
-                      </div>
-                    </div>
-                  )}
-                  {selectedDateRange === 'lastSunday' && (
-                    <div className='flex items-center'>
-                      <FontAwesomeIcon icon={faCalendarWeek} className='text-green-500 mr-2' size='lg' />
-                      <div className='text-primary text-base font-bold'>
-                        Total Tithes Last Sunday: {totalTithesLastSunday.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}
-                      </div>
-                    </div>
-                  )}
-                  </div>
-                  <div>
-                  <p className='text-primary text-base w-full font-bold'>Showing 1 to {filteredTithes.length} entries</p>
-                </div>
-              </div> */}
             </CardContent>
           </div>
         </div>

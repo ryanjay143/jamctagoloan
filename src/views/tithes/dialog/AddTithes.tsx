@@ -4,9 +4,10 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NumericFormat } from 'react-number-format';
+import Denomination from '../children/Denomination';
 
 interface AddTithesProps {
   isDialogOpen: boolean;
@@ -136,25 +137,26 @@ const AddTithes: React.FC<AddTithesProps> = ({
         <DialogHeader className="text-start">
           <DialogTitle>Add Tithes & Offering</DialogTitle>
           <DialogDescription>
-            {rows.map((row, index) => (
-              <div key={index} className="mt-5 mb-5 p-4 border border-b-4 border-primary rounded-lg flex flex-wrap gap-3">
-                <div className="flex-1 min-w-[200px]">
-                  <Label htmlFor="date_created">Date Created</Label>
-                  <Input
-                    type="date"
-                    value={row.date_created || getTodayDate()}
-                    onChange={(e) => handleDateChange(index, e.target.value)}
-                  />
-                </div>
+            
+          {rows.map((row, index) => (
+            <div key={index} className="mt-5 mb-5 p-7 border border-b-4 border-primary rounded-lg flex flex-wrap gap-3 relative">
+              <div className="flex-1 min-w-[200px]">
+                <Label htmlFor="date_created">Date Created</Label>
+                <Input
+                  type="date"
+                  value={row.date_created || getTodayDate()}
+                  onChange={(e) => handleDateChange(index, e.target.value)}
+                />
+              </div>
 
-                <div className="flex-1 min-w-[200px]">
-                  <Label htmlFor="member">Member <span className="text-red-500">*</span></Label>
-                  <Select
+              <div className="flex-1 min-w-[200px]">
+              <Label htmlFor="member">Member <span className="text-gray-500 text-[11px]">(If no name, it's okay to leave it blank)</span></Label>
+                <Select
                     value={selectedMembers[index] || ""}
                     onValueChange={(value) => handleSelect(index, value)}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a member" />
+                      <SelectValue placeholder="Select a member" defaultValue={selectedMembers[index] ? "" : "No name"} />
                     </SelectTrigger>
                     <SelectContent className="overflow-auto max-h-[200px]">
                       {members
@@ -169,96 +171,99 @@ const AddTithes: React.FC<AddTithesProps> = ({
                   {errors[index]?.member && (
                     <span className="text-red-500 text-xs">{errors[index].member}</span>
                   )}
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Label htmlFor="type">Type:</Label>
-                  <Select
-                    value={row.type}
-                    onValueChange={(value) => handleTypeChange(index, value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Tithes and Offering" className="cursor-pointer hover:bg-gray-200">Tithes and Offering</SelectItem>
-                      <SelectItem value="Help fund" className="cursor-pointer hover:bg-gray-200">Help Fund</SelectItem>
-                      <SelectItem value="Solomon Pledge" className="cursor-pointer hover:bg-gray-200">Solomon Pledge</SelectItem>
-                      <SelectItem value="Others" className="cursor-pointer hover:bg-gray-200">Others...</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Label htmlFor="amount">Amount (PHP) <span className="text-red-500">*</span></Label>
-                  <NumericFormat
-                    thousandSeparator={true}
-                    prefix={'₱ '}
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                    allowNegative={false}
-                    value={row.amount}
-                    onValueChange={(values) => {
-                      const { value } = values;
-                      handleAmountChange(index, value);
-                    }}
-                    className="flex h-9 w-full rounded-md border border-primary bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" // Add your input class here
-                    placeholder="0.00"
-                  />
-                  {errors[index]?.amount && (
-                    <span className="text-red-500 text-xs">{errors[index].amount}</span>
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Label htmlFor="payment">Payment Method</Label>
-                  <Select
-                    value={row.paymentMethod}
-                    onValueChange={(value) => handlePaymentMethodChange(index, value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a payment method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Cash" className="cursor-pointer hover:bg-gray-200">Cash</SelectItem>
-                      <SelectItem value="Gcash" className="cursor-pointer hover:bg-gray-200">Gcash</SelectItem>
-                      <SelectItem value="Bank transfer" className="cursor-pointer hover:bg-gray-200">Bank Transfer</SelectItem>
-                      <SelectItem value="Others" className="cursor-pointer hover:bg-gray-200">Others...</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="flex-1 min-w-[200px]">
-                  <Label htmlFor="notes">Notes (Optional)</Label>
-                  <div className="flex justify-between">
-                    <Input
-                      placeholder="Type your notes here..."
-                      value={row.notes}
-                      onChange={(e) => handleNotesChange(index, e.target.value)}
-                    />
-                    {index > 0 && (
-                      <Button
-                        type="button"
-                        className="bg-red-500 hover:bg-red-400 ml-2 h-9"
-                        onClick={() => deleteRow(index)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </Button>
-                    )}
-                  </div>
-                </div>
               </div>
-            ))}
+
+              <div className="flex-1 min-w-[200px]">
+                <Label htmlFor="type">Type:</Label>
+                <Select
+                  value={row.type}
+                  onValueChange={(value) => handleTypeChange(index, value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Tithes and Offering" className="cursor-pointer hover:bg-gray-200">Tithes and Offering</SelectItem>
+                    <SelectItem value="Help fund" className="cursor-pointer hover:bg-gray-200">Help Fund</SelectItem>
+                    <SelectItem value="Solomon Pledge" className="cursor-pointer hover:bg-gray-200">Solomon Pledge</SelectItem>
+                    <SelectItem value="Others" className="cursor-pointer hover:bg-gray-200">Others...</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex-1 min-w-[200px]">
+                <Label htmlFor="amount">Amount (PHP) <span className="text-red-500">*</span></Label>
+                <NumericFormat
+                  thousandSeparator={true}
+                  prefix={'₱ '}
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  allowNegative={false}
+                  value={row.amount}
+                  onValueChange={(values) => {
+                    const { value } = values;
+                    handleAmountChange(index, value);
+                  }}
+                  className="flex h-9 w-full rounded-md border border-primary bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                  placeholder="0.00"
+                />
+                {errors[index]?.amount && (
+                  <span className="text-red-500 text-xs">{errors[index].amount}</span>
+                )}
+              </div>
+
+              <div className="flex-1 min-w-[200px]">
+                <Label htmlFor="payment">Payment Method</Label>
+                <Select
+                  value={row.paymentMethod}
+                  onValueChange={(value) => handlePaymentMethodChange(index, value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a payment method" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Cash" className="cursor-pointer hover:bg-gray-200">Cash</SelectItem>
+                    <SelectItem value="Gcash" className="cursor-pointer hover:bg-gray-200">Gcash</SelectItem>
+                    <SelectItem value="Bank transfer" className="cursor-pointer hover:bg-gray-200">Bank Transfer</SelectItem>
+                    <SelectItem value="Others" className="cursor-pointer hover:bg-gray-200">Others...</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex-1 min-w-[200px]">
+                <Label htmlFor="notes">Notes (Optional)</Label>
+                <Input
+                  placeholder="Type your notes here..."
+                  value={row.notes}
+                  onChange={(e) => handleNotesChange(index, e.target.value)}
+                />
+              </div>
+
+              {index > 0 && (
+                <Button
+                  type="button"
+                  className="bg-red-500 hover:bg-red-400 h-8 w-8 m-2 rounded-full text-white text-sm absolute top-0 right-0"
+                  onClick={() => deleteRow(index)}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </Button>
+              )}
+            </div>
+          ))}
           </DialogDescription>
 
-          <div className="pt-3">
+          <div className="pb-10 flex justify-end items-center">
             <Button
-              className="bg-blue-500 hover:bg-blue-400 h-7"
+              className="bg-blue-500 hover:bg-blue-400 "
               onClick={addRow}
               disabled={isAddDisabled}
             >
-              <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Tithes
+              <FontAwesomeIcon icon={faPlus} className="mr-2" /> Add Tithers
             </Button>
+          </div>
+
+          <div className='p-4 border border-b-4 border-primary rounded-lg flex flex-wrap gap-3'>
+            <Denomination />
           </div>
         </DialogHeader>
 
