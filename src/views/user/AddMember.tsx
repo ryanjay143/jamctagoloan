@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Swal from 'sweetalert2';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import EditMemberInfo from './EditMemberInfo';
-import DialogAddMember from './layouts/dialog/DialogAddMember';
+import DialogAddMember from './Layouts/dialog/DialogAddMember';
 
 const AddMember: React.FC = () => {
   const initialFormState = {
