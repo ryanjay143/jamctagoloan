@@ -5,12 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import axios from '../../plugin/axios';
-import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
-import DialogAddMember from './layouts/dialog/DialogAddMember';
+import DialogAddMember from './Layouts/dialog/DialogAddMember';
 
 function TrackAttendance() {
   const initialFormState = {

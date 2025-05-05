@@ -11,12 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 interface TableAddMemberProps {
   members: any[];
-  getMember: () => void;
   handleEditFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   editPhotoPreview: string | null;
+  getMember: () => Promise<void>;
 }
 
-const TableAddMember: React.FC<TableAddMemberProps> = ({ members, getMember, handleEditFileChange, editPhotoPreview }) => {
+const TableAddMember: React.FC<TableAddMemberProps> = ({ members, handleEditFileChange, editPhotoPreview }) => {
   return (
     <Table className="w-full">
       <TableHeader>

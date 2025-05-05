@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faGift, faList12, faUser, faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
+import { faGift, faList12, faUser, faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
 
 export const navItemForTithes = [
     {

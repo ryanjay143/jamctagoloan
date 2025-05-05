@@ -3,9 +3,9 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import Footer from '../user/layouts/Footer'
 import img from '../../assets/image.jpg'
 import NavLinkForTithes from '../user/Layouts/NavLinkForTithes'
+import Footer from '../user/Layouts/Footer'
 
 function TithesContainer() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);

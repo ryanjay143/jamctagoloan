@@ -1,9 +1,9 @@
 import { ThemeProvider } from "@/components/themeProvider";
-import Sidebar from "./views/user/layouts/Sidebar";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import AdminSidebar from "./views/user/Layouts/Sidebar";
 
 function Admin() {
   const [showScroll, setShowScroll] = useState(false); // Added missing state
@@ -24,7 +24,7 @@ function Admin() {
   return (
     <>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <Sidebar />
+        <AdminSidebar />
         <Outlet />
       </ThemeProvider>
 

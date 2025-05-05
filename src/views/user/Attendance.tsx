@@ -1,11 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
-import NavLink from "./layouts/NavLink";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import img from '../../assets/image.jpg'
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import Footer from "./layouts/Footer";
+import NavLink from "./Layouts/NavLink";
+import Footer from "./Layouts/Footer";
+
 
 function Dashboard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -1,6 +1,6 @@
 
 
-function Footer() {
+export function Footer() {
   return (
     <div>
       <footer className="flex items-center justify-center h-16 bg-gray-200">

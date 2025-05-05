@@ -117,7 +117,7 @@ const AddMember: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('list-of-member', data, {
+      await axios.post('list-of-member', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
