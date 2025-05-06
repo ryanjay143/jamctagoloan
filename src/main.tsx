@@ -33,48 +33,6 @@ const routes = [
         element: <Navigate to="attendance" />,
       },
       {
-        path: "tithes-offering",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <TithesContainer />
-          </Suspense>
-        ),
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <TithesGiving />
-              </Suspense>
-            ),
-          },
-          {
-            path: "expense",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <TithesExpense />
-              </Suspense>
-            ),
-          },
-          {
-            path: "report",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <TithesReport />
-              </Suspense>
-            ),
-          },
-          {
-            path: "per-member-summary",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <TithesPerMemberSummary />
-              </Suspense>
-            ),
-          },
-        ],
-      },
-      {
         path: "attendance",
         element: (
           <Suspense fallback={<Loader />}>
@@ -123,7 +81,42 @@ const routes = [
             <TithesContainer />
           </Suspense>
         ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesGiving />
+              </Suspense>
+            ),
+          },
+          {
+            path: "expense",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesExpense />
+              </Suspense>
+            ),
+          },
+          {
+            path: "report",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesReport />
+              </Suspense>
+            ),
+          },
+          {
+            path: "per-member-summary",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TithesPerMemberSummary />
+              </Suspense>
+            ),
+          },
+        ],
       },
+      
       {
         path: "*",
         element: <NotFound />,
