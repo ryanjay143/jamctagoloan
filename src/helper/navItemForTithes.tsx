@@ -3,7 +3,7 @@ import { faGift, faList12, faUser, faMoneyCheck } from "@fortawesome/free-solid-
 
 export const navItemForTithes = [
     {
-      label: "Tithes Giving",
+      label: "Tithes",
       to: "/jamctagoloan/tithes-offering",
       icon: <FontAwesomeIcon icon={faGift} className="mr-2" />,
     },
@@ -23,7 +23,7 @@ export const navItemForTithes = [
       icon: <FontAwesomeIcon icon={faList12} className="mr-2" />,
     },
     {
-      label: "Per Member Summary",
+      label: "Summary",
       to: "/jamctagoloan/tithes-offering/per-member-summary",
       icon: <FontAwesomeIcon icon={faUser} className="mr-2" />,
     },
