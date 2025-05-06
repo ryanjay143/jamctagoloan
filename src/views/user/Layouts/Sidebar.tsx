@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 
-function AdminSidebar() {
+function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -97,4 +97,4 @@ function AdminSidebar() {
   );
 }
 
-export default AdminSidebar;
+export default Sidebar;
