@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { HashRouter, Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 import NotFound from './notFound';
 import './index.css';
@@ -133,6 +133,9 @@ const routes = [
   
 ];
 
+<HashRouter>
+  <App />
+</HashRouter>
 
 const router = createBrowserRouter(routes);
 
