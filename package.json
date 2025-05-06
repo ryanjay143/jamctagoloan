@@ -1,8 +1,9 @@
 {
-  "name": "jamctagoloanchurch",
-  "homepage": "https://ryanjay143.github.io/jamctagoloanchurch/",
+  "name": "jamctagoloan",
+  "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://ryanjay143.github.io/jamctagoloanchurch/", 
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -27,7 +28,6 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
-    "gh-pages": "^6.3.0",
     "jspdf": "^3.0.1",
     "lucide-react": "^0.483.0",
     "react": "^19.0.0",

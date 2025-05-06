@@ -25,12 +25,12 @@ const AttendanceReport = lazy(() => wait(3000).then(() => import("./views/user/A
 const routes = [
 
   {
-    path: "/jamc/tagoloan",
+    path: "/jamctagoloanchurch",
     element: <App />,
     children: [
       {
         path: "",
-        element: <Navigate to="/jamc/tagoloan/attendance" />,
+        element: <Navigate to="/jamctagoloanchurch/attendance" />,
       },
       {
         path: "tithes-offering",
@@ -140,7 +140,7 @@ const routes = [
   }
   
   // {
-  //   path: "/jamc/tagoloan/tithes-offering",
+  //   path: "/jamctagoloanchurch/tithes-offering",
   //   element: (
   //     <Suspense fallback={<Loader />}>
   //       <TithesContainer />
@@ -149,7 +149,7 @@ const routes = [
   //   children: [
   //     {
   //       path: "",
-  //       element: <Navigate to="/jamc/tagoloan/tithes-offering" />,
+  //       element: <Navigate to="/jamctagoloanchurch/tithes-offering" />,
   //     },
   //   ],
   // },

@@ -11,8 +11,8 @@ function AdminSidebar() {
 
   const links = [
     { path: "#", icon: faDashboard, label: "Dashboard" },
-    { path: "/jamc/tagoloan", icon: faListCheck, label: "Attendance" },
-    { path: "/jamc/tagoloan/tithes-offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
+    { path: "/jamctagoloanchurch", icon: faListCheck, label: "Attendance" },
+    { path: "/jamctagoloanchurch/tithes-offering", icon: faEnvelopeCircleCheck, label: "Tithes & Offering" },
   ];
 
   const handleNavigation = (path: string) => {
@@ -21,14 +21,14 @@ function AdminSidebar() {
   };
 
   const isActive = (linkPath: string): boolean => {
-    if (linkPath === "/jamc/tagoloan") {
+    if (linkPath === "/jamctagoloanchurch") {
       return (
-        location.pathname === "/jamc/tagoloan" ||
-        location.pathname.startsWith("/jamc/tagoloan/attendance")
+        location.pathname === "/jamctagoloanchurch" ||
+        location.pathname.startsWith("/jamctagoloanchurch/attendance")
       );
     }
-    if (linkPath === "/jamc/tagoloan/tithes-offering") {
-      return location.pathname.startsWith("/jamc/tagoloan/tithes-offering");
+    if (linkPath === "/jamctagoloanchurch/tithes-offering") {
+      return location.pathname.startsWith("/jamctagoloanchurch/tithes-offering");
     }
     return location.pathname === linkPath;
   };
@@ -58,7 +58,7 @@ function AdminSidebar() {
           {/* Logo */}
           <div
             className="flex justify-center cursor-pointer"
-            onClick={() => handleNavigation("/jamc/tagoloan/attendance")}
+            onClick={() => handleNavigation("/jamctagoloanchurch/attendance")}
           >
             <img src={logo} alt="Logo" className="w-36 h-24 rounded-2xl object-contain" />
           </div>
