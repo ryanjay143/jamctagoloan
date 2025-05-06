@@ -30,7 +30,7 @@ const routes = [
     children: [
       {
         path: "",
-        element: <Navigate to="/jamctagoloan/attendance" />,
+        element: <Navigate to="attendance" />,
       },
       {
         path: "tithes-offering",
