@@ -2,7 +2,7 @@
   "name": "jamctagoloan",
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ryanjay143.github.io/jamctagoloanchurch/", 
+  "homepage": "https://ryanjay143.github.io/jamctagoloan/", 
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

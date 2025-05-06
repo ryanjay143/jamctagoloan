@@ -4,22 +4,22 @@ import { faHistory, faCalendarCheck, faList, faUser } from "@fortawesome/free-so
 export const navItems = [
     {
       label: "Attendance",
-      to: "/jamctagoloanchurch/attendance",
+      to: "/jamctagoloan/attendance",
       icon: <FontAwesomeIcon icon={faCalendarCheck} className="mr-2" />,
     },
     {
       label: "Records",
-      to: "/jamctagoloanchurch/attendance/history",
+      to: "/jamctagoloan/attendance/history",
       icon: <FontAwesomeIcon icon={faHistory} className="mr-2" />,
     },
     {
       label: "Member",
-      to: "/jamctagoloanchurch/attendance/add-member",
+      to: "/jamctagoloan/attendance/add-member",
       icon: <FontAwesomeIcon icon={faUser} className="mr-2" />,
     },
     {
       label: "Reports",
-      to: "/jamctagoloanchurch/attendance/reports",
+      to: "/jamctagoloan/attendance/reports",
       icon: <FontAwesomeIcon icon={faList} className="mr-2" />,
     },
   ];
