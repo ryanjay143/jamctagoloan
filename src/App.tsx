@@ -6,8 +6,8 @@ import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import AdminSidebar from "./views/user/Layouts/Sidebar";
 
 function Admin() {
-  const [showScroll, setShowScroll] = useState(false); // Added missing state
- 
+  const [showScroll, setShowScroll] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setShowScroll(window.scrollY > 200);
@@ -32,6 +32,7 @@ function Admin() {
         <button
           onClick={scrollToTop}
           className="fixed bottom-6 right-4 p-3 bg-primary text-white w-12 h-12 rounded-full shadow-lg transition"
+          aria-label="Scroll to top"
         >
           <FontAwesomeIcon icon={faAngleUp} />
         </button>

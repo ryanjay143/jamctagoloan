@@ -131,20 +131,6 @@ const routes = [
     ),
   }
   
-  // {
-  //   path: "/jamctagoloan/tithes-offering",
-  //   element: (
-  //     <Suspense fallback={<Loader />}>
-  //       <TithesContainer />
-  //     </Suspense>
-  //   ),
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Navigate to="/jamctagoloan/tithes-offering" />,
-  //     },
-  //   ],
-  // },
 ];
 
 
