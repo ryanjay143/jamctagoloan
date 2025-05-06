@@ -4,27 +4,27 @@ import { faGift, faList12, faUser, faMoneyCheck } from "@fortawesome/free-solid-
 export const navItemForTithes = [
     {
       label: "Tithes Giving",
-      to: "/jamc/tagoloan/tithes-offering",
+      to: "/jamctagoloanchurch/tithes-offering",
       icon: <FontAwesomeIcon icon={faGift} className="mr-2" />,
     },
     // {
     //   label: "Expense",
-    //   to: "/jamc/tagoloan/expense",
+    //   to: "/jamctagoloanchurch/expense",
     //   icon: <FontAwesomeIcon icon={faMoneyCheck} className="mr-2" />,
     // },
     {
       label: "Expense",
-      to: "/jamc/tagoloan/tithes-offering/expense",
+      to: "/jamctagoloanchurch/tithes-offering/expense",
       icon: <FontAwesomeIcon icon={faMoneyCheck} className="mr-2" />,
     },
     {
       label: "Reports",
-      to: "/jamc/tagoloan/tithes-offering/report",
+      to: "/jamctagoloanchurch/tithes-offering/report",
       icon: <FontAwesomeIcon icon={faList12} className="mr-2" />,
     },
     {
       label: "Per Member Summary",
-      to: "/jamc/tagoloan/tithes-offering/per-member-summary",
+      to: "/jamctagoloanchurch/tithes-offering/per-member-summary",
       icon: <FontAwesomeIcon icon={faUser} className="mr-2" />,
     },
   ];
