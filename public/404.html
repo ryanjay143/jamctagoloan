@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; url=/jamctagoloan/" />
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      // Redirect to the proper index.html with the current path preserved
+      const currentPath = window.location.pathname + window.location.search + window.location.hash;
+      window.location.replace("/jamctagoloan/" + currentPath.replace("/jamctagoloan", ""));
+    </script>
   </head>
   <body>
+    <p>Redirecting...</p>
   </body>
 </html>
