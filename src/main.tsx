@@ -30,49 +30,7 @@ const routes = [
     children: [
       {
         path: "",
-        element: <Navigate to="attendance" />,
-      },
-      {
-        path: "attendance",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <Dashboard />
-          </Suspense>
-        ),
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <TrackAttendance />
-              </Suspense>
-            ),
-          },
-          {
-            path: "history",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <AttendanceHistory />
-              </Suspense>
-            ),
-          },
-          {
-            path: "add-member",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <AddMember />
-              </Suspense>
-            ),
-          },
-          {
-            path: "reports",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <AttendanceReport />
-              </Suspense>
-            ),
-          },
-        ],
+        element: <Navigate to="/jamctagoloan/attendance" />,
       },
       {
         path: "tithes-offering",
@@ -116,7 +74,48 @@ const routes = [
           },
         ],
       },
-      
+      {
+        path: "attendance",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Dashboard />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <TrackAttendance />
+              </Suspense>
+            ),
+          },
+          {
+            path: "history",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <AttendanceHistory />
+              </Suspense>
+            ),
+          },
+          {
+            path: "add-member",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <AddMember />
+              </Suspense>
+            ),
+          },
+          {
+            path: "reports",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <AttendanceReport />
+              </Suspense>
+            ),
+          },
+        ],
+      },
       {
         path: "*",
         element: <NotFound />,
