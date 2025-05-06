@@ -193,10 +193,11 @@ const AddMember: React.FC = () => {
                           <TableCell className="flex justify-center items-center">
                             {member.photo ? (
                               <img
-                                src={`${import.meta.env.VITE_URL}/storage/${member.photo}`}
-                                alt={member.name}
-                                className="rounded-full h-10 w-10"
-                              />
+                              src={`${import.meta.env.VITE_URL}/storage/${member.photo}`}
+                              alt={member.name || 'Member Photo'}
+                              className="rounded-full h-10 w-10"
+                              onError={(e) => (e.currentTarget.src = '/fallback-image.png')} // Optional fallback image
+                            />
                             ) : (
                               <Avatar>
                                 <AvatarImage src="https://github.com/shadcn.png" />
