@@ -75,7 +75,7 @@ function EditTithes({ tithe, editingTitheId, setEditingTitheId, handleEditTithe,
                 <Label htmlFor="name" className="text-start">
                   Fullname
                 </Label>
-                <Input value={tithe.member?.name} readOnly className="col-span-3 cursor-not-allowed" />
+                <Input value={tithe.member?.name || 'No name'} readOnly className="col-span-3 cursor-not-allowed" />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="date_created" className="text-start">

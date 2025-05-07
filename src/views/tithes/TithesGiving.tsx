@@ -58,11 +58,8 @@ function TithesGiving() {
   };
 
   const validateInputs = () => {
-    const newErrors: { [key: number]: { member?: string; amount?: string } } = {};
+    const newErrors: { [key: number]: { amount?: string } } = {}; // Removed member validation
     rows.forEach((row, index) => {
-      if (!selectedMembers[index]) {
-        newErrors[index] = { ...newErrors[index], member: "Member is required" };
-      }
       if (!row.amount || parseFloat(row.amount) <= 0) {
         newErrors[index] = { ...newErrors[index], amount: "Amount must be greater than 0" };
       }
@@ -70,37 +67,37 @@ function TithesGiving() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
+  
   const handleSubmit = async () => {
     if (loading) return;
     if (!validateInputs()) return;
-
+  
     setLoading(true);
     setIsAddDisabled(true);
-
+  
     const tithesData = rows.map((row, index) => ({
-      member_id: selectedMembers[index],
+      member_id: selectedMembers[index] || null, // Use selectedMembers[index] if available
       type: row.type,
       amount: parseFloat(row.amount),
       payment_method: row.paymentMethod,
       notes: row.notes,
     }));
-
+  
     try {
       const response = await axios.post('tithes', { tithes: tithesData }, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+  
       setRows([{ type: "Tithes and Offering", paymentMethod: "Cash", amount: "", notes: "" }]);
       setSelectedMembers({});
       setIsDialogOpen(false);
       fetchMembersAndTithes();
-
+  
       const message = response.data.message;
       const isPartialSuccess = message.includes('Note: Some members already had tithes recorded today.');
-
+  
       Swal.fire({
         icon: isPartialSuccess ? 'warning' : 'success',
         title: isPartialSuccess ? 'Partial Success' : 'Success',
@@ -212,7 +209,7 @@ function TithesGiving() {
                         <TableCell className="flex justify-center md:justify-center item-center md:h-24 ">
                           {tithe.member?.photo ? (
                             <img
-                              src={`${import.meta.env.VITE_URL}/storage/${tithe?.member.photo}`}
+                              src={`${import.meta.env.VITE_URL}/${tithe?.member.photo}`}
                               alt={tithe.member.name}
                               className="rounded-full h-10 w-10"
                             />
@@ -223,7 +220,7 @@ function TithesGiving() {
                             </Avatar>
                           )}
                         </TableCell>
-                        <TableCell className='md:text-xs'>{tithe.member?.name}</TableCell>
+                        <TableCell className='md:text-xs'>{tithe.member?.name || "No name"}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.amount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.type}</TableCell>
                         <TableCell className='md:text-xs'>

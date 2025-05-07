@@ -118,8 +118,8 @@ const AddTithes: React.FC<AddTithesProps> = ({
 
   const handleFormSubmit = () => {
     const today = getTodayDate();
-    const dataToSubmit = rows.map((row, index) => ({
-      member_id: selectedMembers[index],
+    const dataToSubmit = rows.map((row) => ({
+      member_id: null, // Set member_id to null
       type: row.type,
       amount: row.amount,
       payment_method: row.paymentMethod,
