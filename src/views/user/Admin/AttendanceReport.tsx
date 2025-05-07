@@ -261,7 +261,7 @@ function AttendanceReport() {
                           <TableCell className="flex justify-center items-center">
                             {sunday.member.photo ? (
                               <img
-                                src={`${import.meta.env.VITE_URL}/storage/${sunday?.member.photo}`}
+                                src={`${import.meta.env.VITE_URL}/${sunday?.member.photo}`}
                                 alt={sunday.member.name}
                                 className="rounded-full h-10 w-10"
                               />

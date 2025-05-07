@@ -237,7 +237,7 @@ function TrackAttendance() {
                           <TableCell className="flex justify-center md:justify-center item-center md:h-24 ">
                             {member.photo ? (
                               <img
-                                src={`${import.meta.env.VITE_URL}/storage/${member.photo}`}
+                                src={`${import.meta.env.VITE_URL}/${member.photo}`}
                                 alt={member.name}
                                 className="rounded-full h-10 md:mt-5 w-10"
                               />

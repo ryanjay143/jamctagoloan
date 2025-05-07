@@ -271,7 +271,7 @@ function AttendanceHistory() {
                               <TableCell className="flex justify-center items-center md:text-xs">
                                 {today.member?.photo ? (
                                   <img
-                                    src={`${import.meta.env.VITE_URL}/storage/${today?.member.photo}`}
+                                    src={`${import.meta.env.VITE_URL}/${today?.member.photo}`}
                                     alt={today.member.name}
                                     className="rounded-full h-10"
                                   />
@@ -339,7 +339,7 @@ function AttendanceHistory() {
                               <TableCell className="flex justify-center items-center md:text-xs">
                                 {first.photo ? (
                                   <img
-                                    src={`${import.meta.env.VITE_URL}/storage/${first?.photo}`}
+                                    src={`${import.meta.env.VITE_URL}/${first?.photo}`}
                                     alt={first.name}
                                     className="rounded-full h-10"
                                   />
@@ -399,7 +399,7 @@ function AttendanceHistory() {
                               <TableCell className="flex justify-center items-center md:text-xs">
                                 {absent.member?.photo ? (
                                   <img
-                                    src={`${import.meta.env.VITE_URL}/storage/${absent?.member.photo}`}
+                                    src={`${import.meta.env.VITE_URL}/${absent?.member.photo}`}
                                     alt={absent.member.name}
                                     className="rounded-full h-10"
                                   />
@@ -470,7 +470,7 @@ function AttendanceHistory() {
                               <TableCell className="flex justify-center items-center md:text-xs">
                                 {sunday.member?.photo ? (
                                   <img
-                                    src={`${import.meta.env.VITE_URL}/storage/${sunday?.member.photo}`}
+                                    src={`${import.meta.env.VITE_URL}/${sunday?.member.photo}`}
                                     alt={sunday.member.name}
                                     className="rounded-full h-10"
                                   />
@@ -539,7 +539,7 @@ function AttendanceHistory() {
                               <TableCell className="flex justify-center items-center md:text-xs">
                                 {kids.member?.photo ? (
                                   <img
-                                    src={`${import.meta.env.VITE_URL}/storage/${kids.member?.photo}`}
+                                    src={`${import.meta.env.VITE_URL}/${kids.member?.photo}`}
                                     alt={kids.member?.name}
                                     className="rounded-full h-10"
                                   />
