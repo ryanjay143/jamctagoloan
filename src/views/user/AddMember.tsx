@@ -193,7 +193,7 @@ const AddMember: React.FC = () => {
                           <TableCell className="flex justify-center items-center">
                             {member.photo ? (
                               <img
-                                src={`${import.meta.env.VITE_URL}/storage/${member.photo}`}
+                                src={`${import.meta.env.VITE_URL}/${member.photo}`}
                                 alt={member.name || 'Member Photo'}
                                 className="rounded-full h-10 w-10"
                               />
