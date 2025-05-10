@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NumericFormat } from 'react-number-format';
-import Denomination from '../children/Denomination';
 
 interface AddTithesProps {
   isDialogOpen: boolean;
@@ -130,6 +129,10 @@ const AddTithes: React.FC<AddTithesProps> = ({
     console.log("Submitting data:", dataToSubmit);
     handleSubmit({ tithes: dataToSubmit });
   };
+
+  const calculateTotalAmount = useMemo(() => {
+    return rows.reduce((total, row) => total + parseFloat(row.amount || '0'), 0).toFixed(2);
+  }, [rows]);
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -262,33 +265,37 @@ const AddTithes: React.FC<AddTithesProps> = ({
             </Button>
           </div>
 
-          <div className='p-4 border border-b-4 border-primary rounded-lg flex flex-wrap gap-3'>
-            <Denomination />
-          </div>
+        
         </DialogHeader>
 
         <DialogFooter>
-          <div className="flex items-center justify-end gap-2">
-            <DialogClose asChild>
-              <Button type="button" className="bg-red-500 hover:bg-red-400" disabled={loading}>
-                Cancel
+          <div className="flex items-center justify-between gap-2">
+            <div>
+              Total Amount: <span className="font-bold">₱ {calculateTotalAmount}</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <DialogClose asChild>
+                <Button type="button" className="bg-red-500 hover:bg-red-400" disabled={loading}>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-400"
+                onClick={handleFormSubmit}
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span>Submitting...</span>
+                    <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4 ml-2" />
+                  </>
+                ) : (
+                  <>Submit</>
+                )}
               </Button>
-            </DialogClose>
-            <Button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-400"
-              onClick={handleFormSubmit}
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <span>Submitting...</span>
-                  <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4 ml-2" />
-                </>
-              ) : (
-                <>Submit</>
-              )}
-            </Button>
+            </div>
+            
           </div>
         </DialogFooter>
       </DialogContent>

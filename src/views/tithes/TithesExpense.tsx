@@ -150,7 +150,7 @@ function TithesExpense() {
                       <TableHead className='text-center md:text-xs'>Date created</TableHead>
                       <TableHead className='text-center md:text-xs'>Title</TableHead>
                       <TableHead className='md:text-xs'>Amount</TableHead>
-                      <TableHead className='md:text-xs'>Action</TableHead>
+                      <TableHead className='md:text-xs text-right'>Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -162,7 +162,7 @@ function TithesExpense() {
                     {expense.map((expenses, index) => (
                       <TableRow key={expenses.id}>
                         <TableCell className='md:text-xs'>{index + 1}</TableCell>
-                        <TableCell className='md:text-xs uppercase font-bold'>{format(new Date(expenses.date_created), 'MMMM dd, yyyy')}</TableCell>
+                        <TableCell className='md:text-xs uppercase font-bold text-center'>{format(new Date(expenses.date_created), 'MMMM dd, yyyy')}</TableCell>
                         <TableCell className='md:text-xs text-center uppercase font-bold'>{expenses.title}</TableCell>
                         <TableCell className='md:text-xs font-bold'>
                           {expenses.amount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}

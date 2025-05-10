@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from '../../plugin/axios';
@@ -11,30 +11,18 @@ import Swal from 'sweetalert2';
 import { format } from 'date-fns';
 import AddTithes from './dialog/AddTithes';
 import EditTithes from './dialog/EditTithes';
-// import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-// import { Check } from 'lucide-react';
-// import { cn } from "@/lib/utils";
-// import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
-// import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function TithesGiving() {
   const [selectedMembers, setSelectedMembers] = useState<{ [key: number]: string }>({});
   const [rows, setRows] = useState([{ type: "Tithes and Offering", paymentMethod: "Cash", amount: "", notes: "" }]);
   const [members, setMembers] = useState<any[]>([]);
   const [tithes, setTithes] = useState<any[]>([]);
-  // const [totalTithes, setTithesTotal] = useState<number>(0);
-  // const [totalTithesLastSunday, setTithesTotalLastSunday] = useState<number>(0);
-  // const [totalTithesToday, setTithesTotalToday] = useState<number>(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isAddDisabled, setIsAddDisabled] = useState(false);
   const [errors, setErrors] = useState<{ [key: number]: { member?: string; amount?: string } }>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [editingTitheId, setEditingTitheId] = useState<string | null>(null);
-  // const [selectedDateRange, setSelectedDateRange] = useState<string>('all');
-  // const [open, setOpen] = useState(false);
-  // const [value, setValue] = useState("");
-  // const [selectedMonth, setSelectedMonth] = useState<string>('all');
 
   useEffect(() => {
     fetchMembersAndTithes();
@@ -49,9 +37,6 @@ function TithesGiving() {
       });
       setMembers(response.data.listOfMembers);
       setTithes(response.data.tithes);
-      // setTithesTotal(response.data.totalAmount);
-      // setTithesTotalLastSunday(response.data.totalAmountLastSunday);
-      // setTithesTotalToday(response.data.totalAmountToday);
     } catch (error) {
       console.error('Error fetching members:', error);
     }
@@ -60,9 +45,6 @@ function TithesGiving() {
   const validateInputs = () => {
     const newErrors: { [key: number]: { member?: string; amount?: string } } = {};
     rows.forEach((row, index) => {
-      if (!selectedMembers[index]) {
-        newErrors[index] = { ...newErrors[index], member: "Member is required" };
-      }
       if (!row.amount || parseFloat(row.amount) <= 0) {
         newErrors[index] = { ...newErrors[index], amount: "Amount must be greater than 0" };
       }
@@ -79,7 +61,7 @@ function TithesGiving() {
     setIsAddDisabled(true);
 
     const tithesData = rows.map((row, index) => ({
-      member_id: selectedMembers[index],
+      member_id: selectedMembers[index] || null,
       type: row.type,
       amount: parseFloat(row.amount),
       payment_method: row.paymentMethod,
@@ -152,10 +134,7 @@ function TithesGiving() {
     }
   };
 
-  // Filter tithes based on search query and selected date range
   const filteredTithes = tithes.filter((tithe) => {
-  
-    // Filter by search query
     return (
       (tithe.member?.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       tithe.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -163,6 +142,10 @@ function TithesGiving() {
       (tithe.notes || '').toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
+
+  const totalAmount = useMemo(() => {
+    return filteredTithes.reduce((total, tithe) => total + parseFloat(tithe.amount || '0'), 0).toFixed(2);
+  }, [filteredTithes]);
 
   return (
     <div className='ml-56 mx-auto md:ml-0 md:w-full mt-3'>
@@ -212,7 +195,7 @@ function TithesGiving() {
                         <TableCell className="flex justify-center md:justify-center item-center md:h-24 ">
                           {tithe.member?.photo ? (
                             <img
-                              src={`${import.meta.env.VITE_URL}/storage/${tithe?.member.photo}`}
+                              src={`${import.meta.env.VITE_URL}/${tithe?.member.photo}`}
                               alt={tithe.member.name}
                               className="rounded-full h-10 w-10"
                             />
@@ -223,7 +206,7 @@ function TithesGiving() {
                             </Avatar>
                           )}
                         </TableCell>
-                        <TableCell className='md:text-xs'>{tithe.member?.name}</TableCell>
+                        <TableCell className='md:text-xs'>{tithe.member?.name || "No Name"}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.amount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}</TableCell>
                         <TableCell className='md:text-xs'>{tithe.type}</TableCell>
                         <TableCell className='md:text-xs'>
@@ -273,13 +256,22 @@ function TithesGiving() {
                                   icon: 'warning',
                                   showCancelButton: true,
                                   confirmButtonText: 'Yes, delete it!',
+                                  confirmButtonColor: '#ef4444',
                                   cancelButtonText: 'No, cancel!',
                                 });
                                 if (result.isConfirmed) {
                                   try {
                                     await axios.delete(`tithes/${tithe.id}`);
                                     fetchMembersAndTithes();
-                                    Swal.fire('Deleted!', 'The tithes has been deleted.', 'success');
+                                    Swal.fire({
+                                      icon: 'success',
+                                      title:'Deleted!',
+                                      text: 'The tithes has been deleted successfully.',
+                                      timer: 2000,
+                                      showConfirmButton: false,
+                                      timerProgressBar: true,
+                                    });
+                                    // Swal.fire('Deleted!', 'The tithes has been deleted.', 'success');
                                   } catch (error) {
                                     console.error('Error deleting tithes:', error);
                                     Swal.fire('Error!', 'Failed to delete tithes. Please try again.', 'error');
@@ -295,6 +287,13 @@ function TithesGiving() {
                       </TableRow>
                     ))}
                   </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TableCell colSpan={3} className='text-right text-xl font-bold'>Total Amount:</TableCell>
+                      <TableCell className='font-bold text-xl'>{totalAmount.toLocaleString('en-US', { style: 'currency', currency: 'PHP' })}</TableCell>
+                      <TableCell colSpan={5}></TableCell>
+                    </TableRow>
+                  </TableFooter>
                 </Table>
               </div>
             </CardContent>

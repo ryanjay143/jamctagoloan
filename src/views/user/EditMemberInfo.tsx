@@ -13,7 +13,7 @@ const EditMemberInfo: React.FC<{ member: any; onUpdate: (updatedMember: any) => 
   const [editData, setEditData] = useState(member);
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editPhotoPreview, setEditPhotoPreview] = useState<string | null>(member.photo ? `${import.meta.env.VITE_URL}/storage/${member.photo}` : null);
+  const [editPhotoPreview, setEditPhotoPreview] = useState<string | null>(member.photo ? `${import.meta.env.VITE_URL}/${member.photo}` : null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

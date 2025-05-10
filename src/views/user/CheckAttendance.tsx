@@ -224,6 +224,7 @@ function TrackAttendance() {
                 <Table className='w-full'>
                   <TableHeader>
                     <TableRow>
+                      <TableHead className='text-center md:text-xs'>#</TableHead>
                       <TableHead className='text-center md:text-xs'>Photo</TableHead>
                       <TableHead className='md:text-xs'>Full Name</TableHead>
                       <TableHead className='md:text-xs'>Role/Ministry</TableHead>
@@ -232,8 +233,9 @@ function TrackAttendance() {
                   </TableHeader>
                   <TableBody>
                     {filteredMembers.length > 0 ? (
-                      filteredMembers.map((member) => (
+                      filteredMembers.map((member: any, index:any) => (
                         <TableRow key={member.id}>
+                          <TableCell className='md:text-xs'>{index + 1}</TableCell>
                           <TableCell className="flex justify-center md:justify-center item-center md:h-24 ">
                             {member.photo ? (
                               <img
@@ -285,7 +287,7 @@ function TrackAttendance() {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={4} className="text-center py-4">
+                        <TableCell colSpan={5} className="text-center py-4">
                           No record found
                         </TableCell>
                       </TableRow>
