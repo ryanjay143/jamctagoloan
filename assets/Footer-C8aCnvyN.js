@@ -1,1 +1,0 @@
-import{j as e}from"./index-CDHEStrQ.js";const t="/jamctagoloan/assets/image-BySjxV7P.jpg";function a(){return e.jsx("div",{children:e.jsx("footer",{className:"flex items-center justify-center h-16 bg-gray-200",children:e.jsx("p",{className:"text-gray-600",children:"© 2025 JAMC Tagoloan"})})})}export{a as F,t as i};
