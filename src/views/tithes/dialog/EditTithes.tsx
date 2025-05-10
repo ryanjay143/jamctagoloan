@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isToday } from 'date-fns';
 import { NumericFormat, NumberFormatValues } from 'react-number-format';
 
 interface EditTithesProps {
@@ -21,8 +20,6 @@ interface EditTithesProps {
 }
 
 function EditTithes({ tithe, editingTitheId, setEditingTitheId, handleEditTithe, index, setTithes }: EditTithesProps) {
-  const createdAtDate = new Date(tithe.created_at);
-  const isButtonEnabled = isToday(createdAtDate);
 
   // State for validation errors
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
