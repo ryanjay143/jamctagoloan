@@ -57,10 +57,8 @@ function EditTithes({ tithe, editingTitheId, setEditingTitheId, handleEditTithe,
     }}>
       <DialogTrigger asChild>
         <Button
-          className={`text-white w-7 h-7 rounded-md ${
-            isButtonEnabled ? 'bg-green-500 hover:bg-green-400' : ''
-          }`}
-          disabled={!isButtonEnabled}
+          className='text-white w-7 h-7 rounded-md 
+            bg-green-500 hover:bg-green-400'
         >
           <FontAwesomeIcon icon={faPen} />
         </Button>
